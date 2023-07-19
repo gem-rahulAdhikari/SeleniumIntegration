@@ -21,7 +21,7 @@ import org.openqa.selenium.Keys;
 public class App {
     public static void main(String[] args) {
         // Set the path to the ChromeDriver executable
-        System.setProperty("webdriver.chrome.driver", "/home/honey_gemini01/selenium1/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "./chromedriver");
 
         ChromeOptions options=new ChromeOptions();
 options.addArguments("headless");
