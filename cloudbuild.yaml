@@ -6,5 +6,7 @@ steps:
   - --zone=asia-south1-c
   - seleniumtest-1
   - --project=gem-code--editor
-  - --command='my_script.sh'
-  - <path-to-your-script-file>.sh
+  - --command='bash -s'
+  - my_script.sh
+options:
+  logging: CLOUD_LOGGING_ONLY
