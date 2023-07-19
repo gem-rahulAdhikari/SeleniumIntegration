@@ -24,7 +24,11 @@ public class App {
         System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
 
         ChromeOptions options=new ChromeOptions();
-options.addArguments("headless");
+        options.setExperimentalOption("prefs", chromePrefs);
+options.addArguments("--no-sandbox");
+options.addArguments("--headless");
+        options.addArguments("--disable-dev-shm-usage"); //!!!should be enabled for Jenkins
+options.addArguments("--window-size=1920x1080"); //!!!should be enabled for Jenkins
 
         // Create a new instance of the ChromeDriver
         WebDriver driver = new ChromeDriver(options);
