@@ -7,6 +7,6 @@ steps:
   - seleniumtest-1
   - --project=gem-code--editor
   - --command='bash -s'
-  - --path='home/honey_gemini01/my_script.sh'
+  - 'cat home/honey_gemini01/my_script.sh | bash'
 options:
   logging: CLOUD_LOGGING_ONLY
