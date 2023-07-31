@@ -12,11 +12,11 @@ public class App {
         System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
 
         ChromeOptions options=new ChromeOptions();
-options.addArguments("--no-sandbox");
-options.addArguments("--headless");
-        options.addArguments("--disable-dev-shm-usage"); //!!!should be enabled for Jenkins
-options.addArguments("--window-size=1920x1080"); //!!!should be enabled for Jenkins
-
+        options.addArguments("start-maximized"); // open Browser in maximized mode
+        options.addArguments("disable-infobars"); // disabling infobars
+        options.addArguments("--disable-extensions"); // disabling extensions
+        options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
+        options.addArguments("--no-sandbox");
         // Create a new instance of the ChromeDriver
         WebDriver driver = new ChromeDriver(options);
 System.out.println("Test1");
