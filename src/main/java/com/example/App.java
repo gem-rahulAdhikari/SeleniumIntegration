@@ -1,16 +1,5 @@
+package com.example;
 
-
-/**
- * Hello world!
- *
- */
-/**public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
-    }
-}*/
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -24,7 +13,6 @@ public class App {
         System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
 
         ChromeOptions options=new ChromeOptions();
-        options.setExperimentalOption("prefs", chromePrefs);
 options.addArguments("--no-sandbox");
 options.addArguments("--headless");
         options.addArguments("--disable-dev-shm-usage"); //!!!should be enabled for Jenkins
