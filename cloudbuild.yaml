@@ -4,7 +4,7 @@ steps:
   - compute
   - ssh
   - --zone=asia-south2-c
-  - seleniumtest-1
+  - g-editor
   - --project=g-codeeditor
   - --command='bash -s'
   - --command='/home/gemcodeeditor/script.sh'
