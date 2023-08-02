@@ -3,10 +3,10 @@ steps:
   args:
   - compute
   - ssh
-  - --zone=asia-south1-c
+  - --zone=asia-south2-c
   - seleniumtest-1
-  - --project=gem-code--editor
+  - --project=g-codeeditor
   - --command='bash -s'
-  - --command='/home/honey_gemini01/my_script.sh'
+  - --command='/home/gemcodeeditor/script.sh'
 options:
   logging: CLOUD_LOGGING_ONLY
