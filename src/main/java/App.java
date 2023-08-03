@@ -19,7 +19,14 @@
               options.addArguments("--disable-dev-shm-usage"); 
               options.addArguments("--no-sandbox");
           
-              
+              WebDriver driver = new ChromeDriver(options);
+driver.get("https://www.google.com");
+WebElement inputElement = driver.findElement(By.xpath("//textarea"));
+inputElement.sendKeys("Selenium"+ Keys.ENTER);
+String x=driver.findElement(By.xpath("(//span[text()='Selenium'])[3]")).getText();
+System.out.println("Output: "+x);
+WebElement linkElement = driver.findElement(By.cssSelector("h3 a"));
+linkElement.click();
               driver.quit();
               String apiUrl = "https://us-east-1.aws.data.mongodb-api.com/app/application-0-awqqz/endpoint/addSeleniumResult";
               URL url = new URL(apiUrl);
