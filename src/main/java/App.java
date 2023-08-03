@@ -1,46 +1,47 @@
+CmltcG9ydCBvcmcub3BlbnFhLnNlbGVuaXVtLkJ5OwppbXBvcnQgb3JnLm9w
+ZW5xYS5zZWxlbml1bS5XZWJEcml2ZXI7CmltcG9ydCBvcmcub3BlbnFhLnNl
+bGVuaXVtLldlYkVsZW1lbnQ7CmltcG9ydCBvcmcub3BlbnFhLnNlbGVuaXVt
+LmNocm9tZS5DaHJvbWVEcml2ZXI7CmltcG9ydCBvcmcub3BlbnFhLnNlbGVu
+aXVtLmNocm9tZS5DaHJvbWVPcHRpb25zOwppbXBvcnQgb3JnLm9wZW5xYS5z
+ZWxlbml1bS5LZXlzOwoKcHVibGljIGNsYXNzIEFwcCB7CiAgICBwdWJsaWMg
+c3RhdGljIHZvaWQgbWFpbihTdHJpbmdbXSBhcmdzKSB7CiAgICAgICAgLy8g
+U2V0IHRoZSBwYXRoIHRvIHRoZSBDaHJvbWVEcml2ZXIgZXhlY3V0YWJsZQog
+ICAgICAgIFN5c3RlbS5zZXRQcm9wZXJ0eSgid2ViZHJpdmVyLmNocm9tZS5k
+cml2ZXIiLCAiL3Vzci9iaW4vY2hyb21lZHJpdmVyIik7CgogICAgICAgIENo
+cm9tZU9wdGlvbnMgb3B0aW9ucz1uZXcgQ2hyb21lT3B0aW9ucygpOwogICAg
+ICAgIG9wdGlvbnMuYWRkQXJndW1lbnRzKCItLWhlYWRsZXNzIik7CiAgICAg
+ICAgb3B0aW9ucy5hZGRBcmd1bWVudHMoInN0YXJ0LW1heGltaXplZCIpOyAv
+LyBvcGVuIEJyb3dzZXIgaW4gbWF4aW1pemVkIG1vZGUKICAgICAgICBvcHRp
+b25zLmFkZEFyZ3VtZW50cygiZGlzYWJsZS1pbmZvYmFycyIpOyAvLyBkaXNh
+YmxpbmcgaW5mb2JhcnMKICAgICAgICBvcHRpb25zLmFkZEFyZ3VtZW50cygi
+LS1kaXNhYmxlLWV4dGVuc2lvbnMiKTsgLy8gZGlzYWJsaW5nIGV4dGVuc2lv
+bnMKICAgICAgICBvcHRpb25zLmFkZEFyZ3VtZW50cygiLS1kaXNhYmxlLWRl
+di1zaG0tdXNhZ2UiKTsgLy8gb3ZlcmNvbWUgbGltaXRlZCByZXNvdXJjZSBw
+cm9ibGVtcwogICAgICAgIG9wdGlvbnMuYWRkQXJndW1lbnRzKCItLW5vLXNh
+bmRib3giKTsKICAgICAgICAvLyBDcmVhdGUgYSBuZXcgaW5zdGFuY2Ugb2Yg
+dGhlIENocm9tZURyaXZlcgogICAgICAgIFdlYkRyaXZlciBkcml2ZXIgPSBu
+ZXcgQ2hyb21lRHJpdmVyKG9wdGlvbnMpOwpTeXN0ZW0ub3V0LnByaW50bG4o
+IlRlc3QxIik7CiAgICAgICAgLy8gTmF2aWdhdGUgdG8gYSB3ZWJwYWdlCiAg
+ICAgICAgZHJpdmVyLmdldCgiaHR0cHM6Ly93d3cuZ29vZ2xlLmNvbSIpOwpT
+eXN0ZW0ub3V0LnByaW50bG4oIlRlc3QyIik7CgogICAgICAgIC8vIEZpbmQg
+YW4gaW5wdXQgZWxlbWVudCBhbmQgZW50ZXIgdGV4dAogICAgICAgIFdlYkVs
+ZW1lbnQgaW5wdXRFbGVtZW50ID0gZHJpdmVyLmZpbmRFbGVtZW50KEJ5Lnhw
+YXRoKCIvL3RleHRhcmVhIikpOwogICAgICAgIGlucHV0RWxlbWVudC5zZW5k
+S2V5cygiU2VsZW5pdW0iKyBLZXlzLkVOVEVSKTsKU3RyaW5nIHg9ZHJpdmVy
+LmZpbmRFbGVtZW50KEJ5LnhwYXRoKCIoLy9zcGFuW3RleHQoKT0nU2VsZW5p
+dW0nXSlbM10iKSkuZ2V0VGV4dCgpOwpTeXN0ZW0ub3V0LnByaW50bG4oIk91
+dHB1dDogIit4KTsKCiAgICAgICAgLy8gV2FpdCBmb3IgdGhlIHNlYXJjaCBy
+ZXN1bHRzIHBhZ2UgdG8gbG9hZAogICAgICAgIC8vIFlvdSBtaWdodCBuZWVk
+IHRvIHVzZSBleHBsaWNpdCBvciBpbXBsaWNpdCB3YWl0cyBoZXJlCgogICAg
+ICAgIC8vIEZpbmQgYSBsaW5rIG9uIHRoZSBzZWFyY2ggcmVzdWx0cyBwYWdl
+IGFuZCBjbGljayBpdAogICAgICAgIFdlYkVsZW1lbnQgbGlua0VsZW1lbnQg
+PSBkcml2ZXIuZmluZEVsZW1lbnQoQnkuY3NzU2VsZWN0b3IoImgzIGEiKSk7
+CiAgICAgICAgbGlua0VsZW1lbnQuY2xpY2soKTsKCiAgICAgICAgLy8gUGVy
+Zm9ybSBvdGhlciBhY3Rpb25zIG9yIGFzc2VydGlvbnMgYXMgbmVlZGVkClN5
+c3RlbS5vdXQucHJpbnRsbigiVGVzdDMiKTsKICAgICAgICAvLyBDbG9zZSB0
+aGUgYnJvd3NlcgogICAgICAgIGRyaXZlci5xdWl0KCk7CiAgICB9Cn0=
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.Keys;
-
-public class App {
-    public static void main(String[] args) {
-        // Set the path to the ChromeDriver executable
-        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
-
-        ChromeOptions options=new ChromeOptions();
-        options.addArguments("--headless");
-        options.addArguments("start-maximized"); // open Browser in maximized mode
-        options.addArguments("disable-infobars"); // disabling infobars
-        options.addArguments("--disable-extensions"); // disabling extensions
-        options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
-        options.addArguments("--no-sandbox");
-        // Create a new instance of the ChromeDriver
-        WebDriver driver = new ChromeDriver(options);
-System.out.println("Test1");
-        // Navigate to a webpage
-        driver.get("https://www.google.com");
-System.out.println("Test2");
-
-        // Find an input element and enter text
-        WebElement inputElement = driver.findElement(By.xpath("//textarea"));
-        inputElement.sendKeys("Selenium"+ Keys.ENTER);
-String x=driver.findElement(By.xpath("(//span[text()='Selenium'])[3]")).getText();
-System.out.println("Output: "+x);
-
-        // Wait for the search results page to load
-        // You might need to use explicit or implicit waits here
-
-        // Find a link on the search results page and click it
-        WebElement linkElement = driver.findElement(By.cssSelector("h3 a"));
-        linkElement.click();
-
-        // Perform other actions or assertions as needed
-System.out.println("Test3");
-        // Close the browser
-        driver.quit();
-    }
-}
+[object HTMLPreElement]
+             
+              System.out.print('hello');
+[object HTMLPreElement]
