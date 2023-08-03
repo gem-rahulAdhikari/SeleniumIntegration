@@ -20,7 +20,6 @@
               options.addArguments("--no-sandbox");
           
               WebDriver driver = new ChromeDriver(options);
-//hello
 driver.get("https://www.google.com");
 WebElement inputElement = driver.findElement(By.xpath("//textarea"));
 inputElement.sendKeys("Selenium"+ Keys.ENTER);
