@@ -49,10 +49,12 @@ System.out.println("Test3");
         driver.quit();
 
 //httpclient code 
+System.out.println("Driver quit success")
+System.out.println("HTTP Client: "+x);
 
-System.out.println(x);
 
- String apiUrl = "https://us-east-1.aws.data.mongodb-api.com/app/application-0-awqqz/endpoint/addSeleniumResult>
+
+ String apiUrl = "https://us-east-1.aws.data.mongodb-api.com/app/application-0-awqqz/endpoint/addSeleniumResult";
 
             // Create a URL object
             URL url = new URL(apiUrl);
@@ -90,7 +92,7 @@ System.out.println(x);
 
             if (statusCode == HttpURLConnection.HTTP_OK) {
                 // Read the response from the connection
-                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream>
+               try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
                     String line;
                     StringBuilder response = new StringBuilder();
                     while ((line = reader.readLine()) != null) {
