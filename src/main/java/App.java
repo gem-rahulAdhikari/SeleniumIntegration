@@ -1,5 +1,5 @@
         
-  try {  
+  
       import org.openqa.selenium.By;
       import org.openqa.selenium.WebDriver;
       import org.openqa.selenium.WebElement;
@@ -9,6 +9,7 @@
 
       public class App {
           public static void main(String[] args) {
+            try {  
               System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
               ChromeOptions options=new ChromeOptions();
               options.addArguments("--headless");
@@ -18,7 +19,7 @@
               options.addArguments("--disable-dev-shm-usage"); 
               options.addArguments("--no-sandbox");
           
-              System.out.println("hello");
+              
               driver.quit();
               String apiUrl = "https://us-east-1.aws.data.mongodb-api.com/app/application-0-awqqz/endpoint/addSeleniumResult";
               URL url = new URL(apiUrl);
