@@ -1,5 +1,9 @@
         
-  
+      import java.io.BufferedReader;
+      import java.io.DataOutputStream;
+      import java.io.InputStreamReader;
+      import java.net.HttpURLConnection;
+      import java.net.URL;
       import org.openqa.selenium.By;
       import org.openqa.selenium.WebDriver;
       import org.openqa.selenium.WebElement;
@@ -27,6 +31,7 @@ String x=driver.findElement(By.xpath("(//span[text()='Selenium'])[3]")).getText(
 System.out.println("Output: "+x);
 WebElement linkElement = driver.findElement(By.cssSelector("h3 a"));
 linkElement.click();
+
               driver.quit();
               String apiUrl = "https://us-east-1.aws.data.mongodb-api.com/app/application-0-awqqz/endpoint/addSeleniumResult";
               URL url = new URL(apiUrl);
