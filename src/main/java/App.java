@@ -49,7 +49,7 @@ System.out.println("Test3");
         driver.quit();
 
 //httpclient code 
-System.out.println("Driver quit success")
+System.out.println("Driver quit success");
 System.out.println("HTTP Client: "+x);
 
 
