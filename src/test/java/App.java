@@ -13,7 +13,7 @@ public class App {
 
     @BeforeClass
     public void configDriver(){
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Dipanshu.Kapoor\\Downloads\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
         options.addArguments("start-maximized");
