@@ -4,16 +4,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class App {
-    static WebDriver driver;
+    WebDriver driver;
 
-    @BeforeMethod
-    public void configureDriver(){
-        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
+    @BeforeClass
+    public void configDriver(){
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Dipanshu.Kapoor\\Downloads\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
         options.addArguments("start-maximized");
@@ -25,12 +25,13 @@ public class App {
         driver = new ChromeDriver(options);
     }
 
-    @AfterMethod
+    @AfterClass
     public void quitDriver(){
         driver.quit();
     }
+
     @Test
-    public void run() {
+    public void run(){
         try {
             driver.get("https://www.google.com");
             WebElement inputElement = driver.findElement(By.xpath("//textarea"));
@@ -44,4 +45,3 @@ public class App {
         }
     }
 }
-  
