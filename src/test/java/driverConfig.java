@@ -16,11 +16,11 @@ import org.testng.annotations.BeforeMethod;
 
 import java.util.Base64;
 
-public abstract class driverConfig {
+public abstract class driverConfig extends WebdriverEventListener{
     static ThreadLocal<WebDriver> wDriver = new ThreadLocal<WebDriver>();
-    WebDriver driver;
-    ExtentReports extentReports;
-    ExtentTest extentTest;
+    public static WebDriver driver;
+//    ExtentReports extentReports;
+//    ExtentTest extentTest;
 
     @BeforeMethod
     public void setWebDriver() {
@@ -38,22 +38,16 @@ public abstract class driverConfig {
         wDriver.set(decorated);
         driver = wDriver.get();
 
-        ExtentSparkReporter htmlReporter = new ExtentSparkReporter("test-output/extent-report.html");
-        extentReports = new ExtentReports();
-        extentReports.attachReporter(htmlReporter);
-        extentTest = extentReports.createTest(getClass().getSimpleName());
+
+//        ExtentSparkReporter htmlReporter = new ExtentSparkReporter("test-output/extent-report.html");
+//        extentReports = new ExtentReports();
+//        extentReports.attachReporter(htmlReporter);
+//        extentTest = extentReports.createTest(getClass().getSimpleName());
     }
 
     @AfterMethod
     public void tearDown() {
         driver.quit();
         extentReports.flush();
-    }
-
-    public Media captureScreenshot() {
-        TakesScreenshot screenshotDriver = (TakesScreenshot) driver;
-        byte[] screenshotBytes = screenshotDriver.getScreenshotAs(OutputType.BYTES);
-        return MediaEntityBuilder.createScreenCaptureFromBase64String(Base64.getEncoder().encodeToString(screenshotBytes)).build();
-
     }
 }
