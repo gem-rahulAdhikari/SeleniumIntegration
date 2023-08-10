@@ -1,43 +1,21 @@
+import com.aventstack.extentreports.Status;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class App {
-    WebDriver driver;
-
-    @BeforeClass
-    public void configDriver(){
-        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
-        options.addArguments("start-maximized");
-        options.addArguments("disable-infobars");
-        options.addArguments("--disable-extensions");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--no-sandbox");
-
-        driver = new ChromeDriver(options);
-    }
-
-    @AfterClass
-    public void quitDriver(){
-        driver.quit();
-    }
+public class App extends driverConfig{
 
     @Test
     public void run(){
         try {
             driver.get("https://www.google.com");
+
             WebElement inputElement = driver.findElement(By.xpath("//textarea"));
             inputElement.sendKeys("Selenium" + Keys.ENTER);
             String x = driver.findElement(By.xpath("(//span[text()='Selenium'])[3]")).getText();
             System.out.println("Output: " + x);
+            extentTest.log(Status.INFO,"Log1");
             WebElement linkElement = driver.findElement(By.cssSelector("h3 a"));
             linkElement.click();
         } catch (Exception e) {
