@@ -10,7 +10,6 @@ import java.util.*;
 import java.awt.*;
 import java.math.*;
 import java.time.*;
-import java.util.List;
 
 public class App extends driverConfig{
 
@@ -34,4 +33,5 @@ public class App extends driverConfig{
             e.printStackTrace();
         }
     }
+
 }
