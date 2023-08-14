@@ -11,10 +11,10 @@ import java.awt.*;
 import java.math.*;
 import java.time.*;
 
-public class selenium1f51a60ea453780df5aef0b3c3cf6090a25ea1aa2216c0392a031be2811490ed8_0 extends driverConfig{
+public class App extends driverConfig{
 
     @Test
                         
-System.out.print('kji')
+print("hello")
     }
                     
