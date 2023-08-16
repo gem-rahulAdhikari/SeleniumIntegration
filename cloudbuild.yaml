@@ -7,7 +7,7 @@ steps:
   - g-editor
   - --project=g-codeeditor
   - name: 'gcr.io/cloud-builders/gcloud'
-  entrypoint: 'bash'
+    entrypoint: 'bash'
     args:
       - '-c'
       - |
