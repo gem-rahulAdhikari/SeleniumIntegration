@@ -6,7 +6,7 @@ steps:
   - --zone=asia-south2-c
   - g-editor
   - --project=g-codeeditor
-  - --command='bash -s'
-  - --command='/home/gemcodeeditor/script.sh'
+- name: 'execute shell script'
+  args: ['param1']
 options:
   logging: CLOUD_LOGGING_ONLY
