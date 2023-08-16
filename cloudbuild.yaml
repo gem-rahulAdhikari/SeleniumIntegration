@@ -1,17 +1,12 @@
 steps:
 - name: 'gcr.io/cloud-builders/gcloud'
-  id: A
   args:
   - compute
   - ssh
   - --zone=asia-south2-c
   - g-editor
   - --project=g-codeeditor
-- name: 'gcr.io/cloud-builders/gcloud'
-  waitFor:
-  - A
-  args:
   - --command='bash -s'
-  - --command='/home/gemcodeeditor/script.sh'
+  - --command='/home/gemcodeeditor/script.sh "abc"'
 options:
   logging: CLOUD_LOGGING_ONLY
