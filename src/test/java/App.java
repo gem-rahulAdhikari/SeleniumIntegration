@@ -12,6 +12,7 @@ import java.math.*;
 import java.time.*;
 
 public class App extends driverConfig{
+    public static String reportName="";
 
     @Test
     public void run(){

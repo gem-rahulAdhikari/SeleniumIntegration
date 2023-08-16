@@ -27,15 +27,6 @@ public class WebdriverEventListener implements WebDriverListener {
         return MediaEntityBuilder.createScreenCaptureFromBase64String(Base64.getEncoder().encodeToString(screenshotBytes)).build();
     }
 
-    @BeforeSuite
-    public void reporter() {
-        String className=new App().getClass().getName();
-        ExtentSparkReporter htmlReporter = new ExtentSparkReporter("test-output/App.html");
-        extentReports = new ExtentReports();
-        extentReports.attachReporter(htmlReporter);
-        extentTest = extentReports.createTest(getClass().getSimpleName());
-    }
-
     @Override
     public void afterGet(WebDriver driver, String url) {
         extentTest.log(Status.PASS, "Launched Url Successfully : " + url, captureScreenshot());
