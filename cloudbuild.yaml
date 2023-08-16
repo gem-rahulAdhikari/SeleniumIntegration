@@ -10,6 +10,6 @@ steps:
   args:
     - '-c'
     - |
-      /home/gemcodeeditor/script.sh 'param1'
+      ./home/gemcodeeditor/script.sh 'param1'
 options:
   logging: CLOUD_LOGGING_ONLY
