@@ -6,9 +6,11 @@ steps:
   - --zone=asia-south2-c
   - g-editor
   - --project=g-codeeditor
-  - --command='bash -s'
-  - --args:
-  - -- - '/home/gemcodeeditor/script.sh'
-  - -- - 'param1'
+  - name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        /home/gemcodeeditor/script.sh param1
 options:
   logging: CLOUD_LOGGING_ONLY
