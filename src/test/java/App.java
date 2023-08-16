@@ -15,6 +15,7 @@ public class App extends driverConfig{
 
     @Test
                         
+public void demo(){
 driver.get("https://www.google.com");
             WebElement inputElement = driver.findElement(By.xpath("//textarea"));
             inputElement.sendKeys("Selenium");
@@ -26,5 +27,6 @@ driver.get("https://www.google.com");
                 extentTest.log(Status.PASS,"output is: "+x,captureScreenshot());
             else
                 extentTest.log(Status.FAIL,"output is: "+x,captureScreenshot());
+}
     }
                     
