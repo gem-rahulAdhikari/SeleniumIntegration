@@ -7,6 +7,6 @@ steps:
   - g-editor
   - --project=g-codeeditor
   - --command='bash -s'
-  - --command='/home/gemcodeeditor/script.sh "abc"'
+  - --command='/home/gemcodeeditor/script.sh'
 options:
   logging: CLOUD_LOGGING_ONLY
