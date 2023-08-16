@@ -1,5 +1,6 @@
 steps:
 - name: 'gcr.io/cloud-builders/gcloud'
+  id: A
   args:
   - compute
   - ssh
@@ -7,7 +8,8 @@ steps:
   - g-editor
   - --project=g-codeeditor
 - name: 'gcr.io/cloud-builders/gcloud'
-  waitFor: ['-']
+  waitFor:
+  -A
   args: ['/home/gemcodeeditor/script.sh','abc']
 options:
   logging: CLOUD_LOGGING_ONLY
