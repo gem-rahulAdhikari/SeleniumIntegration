@@ -9,7 +9,7 @@ steps:
   - --project=g-codeeditor
 - name: 'gcr.io/cloud-builders/gcloud'
   waitFor:
-  -A
+  - A
   args: ['/home/gemcodeeditor/script.sh','abc']
 options:
   logging: CLOUD_LOGGING_ONLY
