@@ -1,15 +1,9 @@
 import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.MediaEntityBuilder;
-import com.aventstack.extentreports.model.Media;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.events.EventFiringDecorator;
-import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.openqa.selenium.support.events.WebDriverListener;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -17,15 +11,14 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
 import java.io.IOException;
-import java.util.Base64;
 
-public abstract class driverConfig extends WebdriverEventListener{
-    static ThreadLocal<WebDriver> wDriver = new ThreadLocal<WebDriver>();
+public abstract class driverConfig extends WebdriverEventListener {
     public static WebDriver driver;
+    static ThreadLocal<WebDriver> wDriver = new ThreadLocal<WebDriver>();
 
     @BeforeSuite
     public void reporter() {
-        ExtentSparkReporter htmlReporter = new ExtentSparkReporter("test-output/"+App.reportName+".html");
+        ExtentSparkReporter htmlReporter = new ExtentSparkReporter("test-output/" + App.reportName + ".html");
         extentReports = new ExtentReports();
         extentReports.attachReporter(htmlReporter);
         extentTest = extentReports.createTest(getClass().getSimpleName());
@@ -46,12 +39,6 @@ public abstract class driverConfig extends WebdriverEventListener{
         WebDriver decorated = new EventFiringDecorator(listener).decorate(wDriver.get());
         wDriver.set(decorated);
         driver = wDriver.get();
-
-
-//        ExtentSparkReporter htmlReporter = new ExtentSparkReporter("test-output/extent-report.html");
-//        extentReports = new ExtentReports();
-//        extentReports.attachReporter(htmlReporter);
-//        extentTest = extentReports.createTest(getClass().getSimpleName());
     }
 
     @AfterMethod
@@ -62,10 +49,10 @@ public abstract class driverConfig extends WebdriverEventListener{
 
     @AfterSuite
     public void uploadReport() throws IOException, InterruptedException {
-        String scriptPath = "./upload.sh";
+        String scriptPath = "/home/gemcodeeditor/./upload.sh";
         ProcessBuilder processBuilder = new ProcessBuilder(scriptPath);
         Process process = processBuilder.start();
         int exitCode = process.waitFor();
-        System.out.println("https://storage.googleapis.com/selenium-output/"+App.reportName+".html");
+        System.out.println("Report name: https://storage.googleapis.com/selenium-output/" + App.reportName + ".html");
     }
 }
