@@ -55,6 +55,11 @@ public abstract class driverConfig extends WebdriverEventListener {
         System.out.println("upload started");
         Process process = processBuilder.start();
         int exitCode = process.waitFor();
+        String reportName="https://storage.googleapis.com/selenium-output/" + App.reportName + ".html";
         System.out.println("Report name: https://storage.googleapis.com/selenium-output/" + App.reportName + ".html");
+        mongoTransfer(reportName);
+    }
+
+    public void mongoTransfer(String reportName){
     }
 }

@@ -3,11 +3,9 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.model.Media;
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.support.events.WebDriverListener;
-import org.testng.annotations.BeforeSuite;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
