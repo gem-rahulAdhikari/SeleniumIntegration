@@ -13,6 +13,8 @@ import java.time.*;
 
 public class App extends driverConfig{
 
+ static String reportName="report_key_count";
+    
     @Test
     public void run(){
         try {
