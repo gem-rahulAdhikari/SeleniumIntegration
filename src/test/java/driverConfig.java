@@ -10,6 +10,8 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 
 public abstract class driverConfig extends WebdriverEventListener {
@@ -60,6 +62,23 @@ public abstract class driverConfig extends WebdriverEventListener {
         mongoTransfer(reportName);
     }
 
-    public void mongoTransfer(String reportName){
+    public void mongoTransfer(String reportName) throws IOException {
+        String userId=App.reportName.split("_")[1];
+        String url="http://g-codeeditor.el.r.appspot.com/editor?name="+userId;
+        String filePath = "src/test/java/App.java";
+        String classContent = readClassFileAsString(filePath);
+
+    }
+    public static String readClassFileAsString(String filePath) throws IOException {
+        StringBuilder content = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                content.append(line).append('\n');
+            }
+        }
+
+        return content.toString();
     }
 }
