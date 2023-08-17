@@ -16,6 +16,6 @@ public class App extends driverConfig{
 
     @Test
                         
-System.out.print("this ishello")
+hello
     }
                     
