@@ -55,12 +55,12 @@ public abstract class driverConfig extends WebdriverEventListener {
 
     @AfterSuite
     public void uploadReport() throws IOException, InterruptedException {
-//        System.out.println("in upload function");
-//        String scriptPath = "./upload.sh";
-//        ProcessBuilder processBuilder = new ProcessBuilder(scriptPath);
-//        System.out.println("upload started");
-//        Process process = processBuilder.start();
-//        int exitCode = process.waitFor();
+       System.out.println("in upload function");
+       String scriptPath = "./upload.sh";
+       ProcessBuilder processBuilder = new ProcessBuilder(scriptPath);
+       System.out.println("upload started");
+       Process process = processBuilder.start();
+       int exitCode = process.waitFor();
         String reportName="https://storage.googleapis.com/selenium-output/" + App.reportName + ".html";
         System.out.println("Report name: https://storage.googleapis.com/selenium-output/" + App.reportName + ".html");
         mongoTransfer(reportName);
