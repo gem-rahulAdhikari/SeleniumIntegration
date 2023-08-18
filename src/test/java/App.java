@@ -12,12 +12,11 @@ import java.math.*;
 import java.time.*;
 
 public class App extends driverConfig{
-    static String reportName="Report_f51a60ea453780df5aef0b3c3cf6090a25ea1aa2216c0392a031be2811490ed8_21";
+    static String reportName="Report_f51a60ea453780df5aef0b3c3cf6090a25ea1aa2216c0392a031be2811490ed8_22";
 
-    @Test
-    public void run(){
-        try {
-            driver.get("https://www.google.com");
+    @Test";
+public void demo(){
+  driver.get("https://www.google.com");
             WebElement inputElement = driver.findElement(By.xpath("//textarea"));
             inputElement.sendKeys("Selenium");
             Actions action=new Actions(driver);
@@ -28,11 +27,33 @@ public class App extends driverConfig{
                 extentTest.log(Status.PASS,"output is: "+x,captureScreenshot());
             else
                 extentTest.log(Status.FAIL,"output is: "+x,captureScreenshot());
-            WebElement linkElement = driver.findElement(By.cssSelector("h3 a"));
-            linkElement.click();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
