@@ -32,7 +32,7 @@ public abstract class driverConfig extends WebdriverEventListener {
 
     @BeforeMethod
     public void setWebDriver() {
-        System.setProperty("webdriver.chrome.driver", "C:/Users/rahul.adhikari/Downloads/chromedriver_win32/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
         options.addArguments("start-maximized");
@@ -68,13 +68,9 @@ public abstract class driverConfig extends WebdriverEventListener {
 
     public void mongoTransfer(String reportName) throws IOException {
         String userId=App.reportName.split("_")[1];
-        System.out.println(userId);
         String url="http://127.0.0.1:5000/editor?name="+userId;
-        System.out.println(url);
         String filePath = "src/test/java/App.java";
         String classContent = readClassFileAsString(filePath);
-        System.out.println(classContent);
-        System.out.println(reportName);
         try {
             // URL to send the PUT request
             String apiUrl = "https://us-east-1.aws.data.mongodb-api.com/app/application-0-awqqz/endpoint/updateSeleniumSubmission";
