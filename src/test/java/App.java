@@ -12,7 +12,7 @@ import java.math.*;
 import java.time.*;
 
 public class App extends driverConfig{
-    static String reportName="Report_bac6e88d6f830556be325ffbc618a7c009a6d2405e3054a3ecd24c9fd354cb68_0";
+    static String reportName="Report_f51a60ea453780df5aef0b3c3cf6090a25ea1aa2216c0392a031be2811490ed8_9";
 
     @Test
 public void demo(){
