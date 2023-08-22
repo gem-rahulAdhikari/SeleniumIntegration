@@ -12,7 +12,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
-
+import org.json.JSONArray;
+import org.json.JSONObject;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -68,76 +69,101 @@ public abstract class driverConfig extends WebdriverEventListener {
 
     public void mongoTransfer(String reportName) throws IOException {
         String userId=App.reportName.split("_")[1];
+        System.out.println(userId);
         String url="http://127.0.0.1:5000/editor?name="+userId;
+        System.out.println(url);
         String filePath = "src/test/java/App.java";
         String classContent = readClassFileAsString(filePath);
-        try {
-            // URL to send the PUT request
-            String apiUrl = "https://us-east-1.aws.data.mongodb-api.com/app/application-0-awqqz/endpoint/updateSeleniumSubmission";
-
-            // Create a URL object
-            URL url1 = new URL(apiUrl);
-
-            // Open a connection to the URL
-            HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
-
-            // Set the request method to PUT
-            connection.setRequestMethod("PUT");
-
-            // Set the content type and other headers (if needed)
-            connection.setRequestProperty("Content-Type", "application/json");
-            // connection.setRequestProperty("Authorization", "Bearer YOUR_ACCESS_TOKEN");
-
-            // Enable output (to send data)
-            connection.setDoOutput(true);
-            String escapedClassContent = classContent.replace("\"", "\\\"")
+        System.out.println(classContent);
+        System.out.println(reportName);
+        String escapedClassContent = classContent.replace("\"", "\\\"")
                     .replace("\n", "\\n")
                     .replace("\r", "\\r");
+        try {
+            URL getUrl = new URL("https://us-east-1.aws.data.mongodb-api.com/app/application-0-awqqz/endpoint/getSeleniumOutput"); // Replace with your actual GET API URL
+            HttpURLConnection getConnection = (HttpURLConnection) getUrl.openConnection();
+            getConnection.setRequestMethod("GET");
 
-            String putData = "{\n" +
-                    "    \"filter\": {\n" +
-                    "        \"url\": \"" + url + "\"\n" +
-                    "    },\n" +
-                    "    \"SubmittedCode\":\""+ escapedClassContent +"\",\n" +
-                    "    \"Output\":\"" + reportName + "\"\n" +
-                    "}";
-
-
-            // Write the data to the connection's output stream
-            try (DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream())) {
-                outputStream.writeBytes(putData);
-                outputStream.flush();
-            }
-
-            // Get the HTTP response code
-            int statusCode = connection.getResponseCode();
-
-            // Get the HTTP response status message
-            String statusMessage = connection.getResponseMessage();
-
-            System.out.println("Status Code: " + statusCode);
-            System.out.println("Status Message: " + statusMessage);
-
-            if (statusCode == HttpURLConnection.HTTP_OK) {
-                // Read the response from the connection
-                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-                    String line;
+            int getStatusCode = getConnection.getResponseCode();
+            if (getStatusCode == HttpURLConnection.HTTP_OK) {
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(getConnection.getInputStream()))) {
                     StringBuilder response = new StringBuilder();
+                    String line;
                     while ((line = reader.readLine()) != null) {
                         response.append(line);
                     }
-                    System.out.println("Response: " + response.toString());
-                    System.out.println(putData);
+
+                    String responseData = response.toString();
+                    JSONArray dataArray = new JSONArray(responseData); // Assuming the response is a JSON array
+
+                    String currentUrl = url; // Replace with the URL you want to compare
+
+                    boolean foundMatch = false;
+                    for (int i = 0; i < dataArray.length(); i++) {
+                        JSONObject item = dataArray.getJSONObject(i);
+                        String entryUrl = item.getString("url");
+
+                        if (entryUrl.equals(currentUrl)) {
+                            foundMatch = true;
+
+                            String apiUrl = "https://us-east-1.aws.data.mongodb-api.com/app/application-0-awqqz/endpoint/updateSeleniumSubmission";
+                            URL url1 = new URL(apiUrl);
+                            HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
+                            connection.setRequestMethod("PUT");
+                            connection.setRequestProperty("Content-Type", "application/json");
+                            connection.setDoOutput(true);
+
+                             String putData = "{\n" +
+                                       "    \"filter\": {\n" +
+                                       "        \"url\": \"" + url + "\"\n" +
+                                       "    },\n" +
+                                       "    \"SubmittedCode\":\""+ escapedClassContent +"\",\n" +
+                                       "    \"Output\":\"" + reportName + "\"\n" +
+                                        "}";
+
+                             try (DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream())) {
+                outputStream.writeBytes(putData);
+                outputStream.flush();
+            }
+            int statusCode = connection.getResponseCode();
+            String statusMessage = connection.getResponseMessage();
+            System.out.println("Status Code: " + statusCode);
+            System.out.println("Status Message: " + statusMessage);
+            break; // No need to continue the loop once a match is found
+                        }
+                    }
+
+                    if (!foundMatch) {
+                        String apiUrl = "https://us-east-1.aws.data.mongodb-api.com/app/application-0-awqqz/endpoint/addSeleniumResult";
+                        URL url2 = new URL(apiUrl);
+                        HttpURLConnection connection = (HttpURLConnection) url2.openConnection();
+                        connection.setRequestMethod("PUT");
+                        connection.setRequestProperty("Content-Type", "application/json");
+                        connection.setDoOutput(true);
+                        String putData1 = "{\n" +
+                                "    \"filter\": {\n" +
+                                "        \"url\": \"" + url + "\"\n" +
+                                "    },\n" +
+                                "    \"code\":\""+ escapedClassContent +"\",\n" +
+                                "    \"output\":\"" + reportName + "\"\n" +
+                                "}";
+
+
+                        try (DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream())) {
+                            outputStream.writeBytes(putData1);
+                            outputStream.flush();
+                        }
+                        int statusCode = connection.getResponseCode();
+                        String statusMessage = connection.getResponseMessage();
+                        System.out.println("Status Code: " + statusCode);
+                        System.out.println("Status Message: " + statusMessage);
+                    }
                 }
             } else {
-                // Handle error response if needed
-                System.out.println("Error Response: " + statusCode);
-                System.out.println(putData);
+                System.out.println("GET Request failed with status code " + getStatusCode);
             }
 
-            // Disconnect the connection
-            connection.disconnect();
-
+            getConnection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
         }
