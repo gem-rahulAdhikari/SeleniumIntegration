@@ -25,3 +25,4 @@ public class App extends driverConfig{
             Actions action=new Actions(driver);
             action.click(inputElement1).build().perform();
 }
+}
