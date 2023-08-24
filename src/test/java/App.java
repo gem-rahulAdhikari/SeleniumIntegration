@@ -16,7 +16,7 @@ public class App extends driverConfig{
 
     @Test
 	public void demo(){
-	    driver.get("https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_input_test");
+	driver.get("https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_input_test");
             WebElement iframeElement = driver.findElement(By.xpath("//iframe[@id='iframeResult']")); 
             driver.switchTo().frame(iframeElement);
             WebElement inputElement = driver.findElement(By.xpath("//input[@id='fname']"));
