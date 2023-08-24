@@ -15,19 +15,6 @@ public class App extends driverConfig{
     static String reportName="Report_80fd1ec0b439b415588562cf25d02fc8def0a96bf118f538c63457691791c019_0";
 
     @Test
-public void demo(){
-driver.get("https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_input_test");
-            WebElement iframeElement = driver.findElement(By.xpath("//iframe[@id='iframeResult']")); 
-            driver.switchTo().frame(iframeElement);
-            WebElement inputElement = driver.findElement(By.xpath("//input[@id='fname']"));
-            WebElement inputElement1 = driver.findElement(By.xpath("//input[@type='submit']"));
-            inputElement.sendKeys("Selenium");
-            Actions action=new Actions(driver);
-            action.click(inputElement1).build().perform();
-
-
-}
-
 
 
 
