@@ -69,13 +69,9 @@ public abstract class driverConfig extends WebdriverEventListener {
 
     public void mongoTransfer(String reportName) throws IOException {
         String userId=App.reportName.split("_")[1];
-        System.out.println(userId);
         String url="http://127.0.0.1:5000/editor?name="+userId;
-        System.out.println(url);
         String filePath = "src/test/java/App.java";
         String classContent = readClassFileAsString(filePath);
-        System.out.println(classContent);
-        System.out.println(reportName);
         String escapedClassContent = classContent.replace("\"", "\\\"")
                     .replace("\n", "\\n")
                     .replace("\r", "\\r");
@@ -127,8 +123,6 @@ public abstract class driverConfig extends WebdriverEventListener {
             }
             int statusCode = connection.getResponseCode();
             String statusMessage = connection.getResponseMessage();
-            System.out.println("Status Code: " + statusCode);
-            System.out.println("Status Message: " + statusMessage);
             break; // No need to continue the loop once a match is found
                         }
                     }
@@ -167,26 +161,6 @@ public abstract class driverConfig extends WebdriverEventListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
-//        RestAssured.baseURI = "https://us-east-1.aws.data.mongodb-api.com/";
-//        String jsonBody = "{\n" +
-//                "    \"filter\": {\n" +
-//                "        \"url\": \"" + url + "\"\n" +
-//                "    },\n" +
-//                "    \"SubmittedCode\":\"" + classContent + "\",\n" +
-//                "    \"Output\":\"" + reportName + "\"\n" +
-//                "}";
-//        Response response = RestAssured
-//                .given()
-//                .header("Content-type", "application/json")
-//                .contentType(ContentType.JSON)
-//                .body(jsonBody)
-//                .put("app/application-0-awqqz/endpoint/updateSeleniumSubmission")
-//                .then()
-//                .extract().response();
-    }
     public static String readClassFileAsString(String filePath) throws IOException {
         StringBuilder content = new StringBuilder();
 
