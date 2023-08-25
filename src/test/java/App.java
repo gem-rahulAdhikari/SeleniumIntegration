@@ -16,43 +16,22 @@ public class App extends driverConfig{
 
     @Test
 public void demo(){
-driver.get("https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_input_test");
-            WebElement iframeElement = driver.findElement(By.xpath("//iframe[@id='iframeResult']")); 
-            driver.switchTo().frame(iframeElement);
-            WebElement inputElement = driver.findElement(By.xpath("//input[@id='fname']"));
-            WebElement inputElement1 = driver.findElement(By.xpath("//input[@type='submit']"));
+ try {
+            driver.get("https://www.google.com");
+            WebElement inputElement = driver.findElement(By.xpath("//textarea"));
             inputElement.sendKeys("Selenium");
             Actions action=new Actions(driver);
-            action.click(inputElement1).build().perform();
-
-
+            action.sendKeys(Keys.ENTER).build().perform();
+            String x = driver.findElement(By.xpath("(//span[text()='Selenium'])[3]")).getText();
+            System.out.println("Output: " + x);
+            if (x.equalsIgnoreCase("selenium"))
+                extentTest.log(Status.PASS,"output is: "+x,captureScreenshot());
+            else
+                extentTest.log(Status.FAIL,"output is: "+x,captureScreenshot());
+            WebElement linkElement = driver.findElement(By.cssSelector("h3 a"));
+            linkElement.click();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
