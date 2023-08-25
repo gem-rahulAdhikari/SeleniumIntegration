@@ -69,7 +69,7 @@ public abstract class driverConfig extends WebdriverEventListener {
 
     public void mongoTransfer(String reportName) throws IOException {
         String userId=App.reportName.split("_")[1];
-        String url="http://127.0.0.1:5000/editor?name="+userId;
+        String url="http://g-codeeditor.el.r.appspot.com/editor?name="+userId;
         String filePath = "src/test/java/App.java";
         String classContent = readClassFileAsString(filePath);
         String escapedClassContent = classContent.replace("\"", "\\\"")
