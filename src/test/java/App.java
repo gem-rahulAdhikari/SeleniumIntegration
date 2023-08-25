@@ -15,8 +15,8 @@ public class App extends driverConfig{
     static String reportName="Report_69fc69b85ae7b10753cdb6b77926a2858ca1313620e34ed0595ad48014f938e2_0";
 
     @Test
-	public void demo(){
-	driver.get("https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_input_test");
+public void demo(){
+driver.get("https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_input_test");
             WebElement iframeElement = driver.findElement(By.xpath("//iframe[@id='iframeResult']")); 
             driver.switchTo().frame(iframeElement);
             WebElement inputElement = driver.findElement(By.xpath("//input[@id='fname']"));
@@ -27,6 +27,30 @@ public class App extends driverConfig{
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
