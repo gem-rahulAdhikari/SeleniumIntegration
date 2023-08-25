@@ -21,7 +21,7 @@ public class App extends driverConfig{
             driver.switchTo().frame(iframeElement);
             WebElement inputElement = driver.findElement(By.xpath("//input[@id='fname']"));
             WebElement inputElement1 = driver.findElement(By.xpath("//input[@type='submit']"));
-            inputElement.sendKeys("Selenium");
+            inputElement.sendKeys("Selenium Testing");
             Actions action=new Actions(driver);
             action.click(inputElement1).build().perform();
 
