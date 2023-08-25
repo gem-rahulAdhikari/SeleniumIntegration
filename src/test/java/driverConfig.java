@@ -56,13 +56,13 @@ public abstract class driverConfig extends WebdriverEventListener {
 
     @AfterSuite
     public void uploadReport() throws IOException, InterruptedException {
-       System.out.println("in upload function");
-       String scriptPath = "./upload.sh";
-       ProcessBuilder processBuilder = new ProcessBuilder(scriptPath);
-       System.out.println("upload started");
-       Process process = processBuilder.start();
-       int exitCode = process.waitFor();
-        String reportName="https://storage.googleapis.com/selenium-output/" + App.reportName + ".html";
+        System.out.println("in upload function");
+        String scriptPath = "./upload.sh";
+        ProcessBuilder processBuilder = new ProcessBuilder(scriptPath);
+        System.out.println("upload started");
+        Process process = processBuilder.start();
+        int exitCode = process.waitFor();
+        String reportName = "https://storage.googleapis.com/selenium-output/" + App.reportName + ".html";
         System.out.println("Report name: https://storage.googleapis.com/selenium-output/" + App.reportName + ".html");
         mongoTransfer(reportName);
     }
@@ -73,8 +73,8 @@ public abstract class driverConfig extends WebdriverEventListener {
         String filePath = "src/test/java/App.java";
         String classContent = readClassFileAsString(filePath);
         String escapedClassContent = classContent.replace("\"", "\\\"")
-                    .replace("\n", "\\n")
-                    .replace("\r", "\\r");
+                .replace("\n", "\\n")
+                .replace("\r", "\\r");
         try {
             URL getUrl = new URL("https://us-east-1.aws.data.mongodb-api.com/app/application-0-awqqz/endpoint/getSeleniumOutput"); // Replace with your actual GET API URL
             HttpURLConnection getConnection = (HttpURLConnection) getUrl.openConnection();
@@ -109,21 +109,23 @@ public abstract class driverConfig extends WebdriverEventListener {
                             connection.setRequestProperty("Content-Type", "application/json");
                             connection.setDoOutput(true);
 
-                             String putData = "{\n" +
-                                       "    \"filter\": {\n" +
-                                       "        \"url\": \"" + url + "\"\n" +
-                                       "    },\n" +
-                                       "    \"SubmittedCode\":\""+ escapedClassContent +"\",\n" +
-                                       "    \"Output\":\"" + reportName + "\"\n" +
-                                        "}";
+                            String putData = "{\n" +
+                                    "    \"filter\": {\n" +
+                                    "        \"url\": \"" + url + "\"\n" +
+                                    "    },\n" +
+                                    "    \"SubmittedCode\":\""+ escapedClassContent +"\",\n" +
+                                    "    \"Output\":\"" + reportName + "\"\n" +
+                                    "}";
 
-                             try (DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream())) {
-                outputStream.writeBytes(putData);
-                outputStream.flush();
-            }
-            int statusCode = connection.getResponseCode();
-            String statusMessage = connection.getResponseMessage();
-            break; // No need to continue the loop once a match is found
+                            try (DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream())) {
+                                outputStream.writeBytes(putData);
+                                outputStream.flush();
+                            }
+                            int statusCode = connection.getResponseCode();
+                            String statusMessage = connection.getResponseMessage();
+                            System.out.println("Status Code: " + statusCode);
+                            System.out.println("Status Message: " + statusMessage);
+                            break; // No need to continue the loop once a match is found
                         }
                     }
 
@@ -161,6 +163,26 @@ public abstract class driverConfig extends WebdriverEventListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+
+//        RestAssured.baseURI = "https://us-east-1.aws.data.mongodb-api.com/";
+//        String jsonBody = "{\n" +
+//                "    \"filter\": {\n" +
+//                "        \"url\": \"" + url + "\"\n" +
+//                "    },\n" +
+//                "    \"SubmittedCode\":\"" + classContent + "\",\n" +
+//                "    \"Output\":\"" + reportName + "\"\n" +
+//                "}";
+//        Response response = RestAssured
+//                .given()
+//                .header("Content-type", "application/json")
+//                .contentType(ContentType.JSON)
+//                .body(jsonBody)
+//                .put("app/application-0-awqqz/endpoint/updateSeleniumSubmission")
+//                .then()
+//                .extract().response();
+    }
     public static String readClassFileAsString(String filePath) throws IOException {
         StringBuilder content = new StringBuilder();
 
