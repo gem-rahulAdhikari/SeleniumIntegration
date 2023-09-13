@@ -12,7 +12,7 @@ import java.math.*;
 import java.time.*;
  
 public class App extends driverConfig{
-    static String reportName="Report_8522297b53b2a53628a2099b8785b83fe1299412eca18640b8a5e91a532ce3eb_2";
+    static String reportName="Report_890fa50bbfb3a9bfa9e3619566c8ed4736349a457d7efad0fe91b299042cd02f_0";
  
     @Test
     public void demo(){
@@ -21,7 +21,7 @@ driver.get("https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_input_test
             driver.switchTo().frame(iframeElement);
             WebElement inputElement = driver.findElement(By.xpath("//input[@id='fname']"));
             WebElement inputElement1 = driver.findElement(By.xpath("//input[@type='submit']"));
-            inputElement.sendKeys("Selenium_TestRahul");
+            inputElement.sendKeys("Selenium");
             Actions action=new Actions(driver);
             action.click(inputElement1).build().perform();
 }
