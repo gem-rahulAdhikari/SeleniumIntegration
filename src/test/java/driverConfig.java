@@ -1,8 +1,7 @@
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -12,8 +11,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
-import org.json.JSONArray;
-import org.json.JSONObject;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -23,8 +21,23 @@ public abstract class driverConfig extends WebdriverEventListener {
     public static WebDriver driver;
     static ThreadLocal<WebDriver> wDriver = new ThreadLocal<WebDriver>();
 
+    public static String readClassFileAsString(String filePath) throws IOException {
+        //Reading user-updated code
+        StringBuilder content = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                content.append(line).append('\n');
+            }
+        }
+
+        return content.toString();
+    }
+
     @BeforeSuite
     public void reporter() {
+        //Extent report initialization
         ExtentSparkReporter htmlReporter = new ExtentSparkReporter("test-output/" + App.reportName + ".html");
         extentReports = new ExtentReports();
         extentReports.attachReporter(htmlReporter);
@@ -33,6 +46,7 @@ public abstract class driverConfig extends WebdriverEventListener {
 
     @BeforeMethod
     public void setWebDriver() {
+        //Chromedriver setup
         System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
@@ -50,12 +64,14 @@ public abstract class driverConfig extends WebdriverEventListener {
 
     @AfterMethod
     public void tearDown() {
+        //terminating execution
         driver.quit();
         extentReports.flush();
     }
 
     @AfterSuite
     public void uploadReport() throws IOException, InterruptedException {
+        //Uploading report to gcloud bucket storage
         System.out.println("in upload function");
         String scriptPath = "./upload.sh";
         ProcessBuilder processBuilder = new ProcessBuilder(scriptPath);
@@ -68,8 +84,9 @@ public abstract class driverConfig extends WebdriverEventListener {
     }
 
     public void mongoTransfer(String reportName) throws IOException {
-        String userId=App.reportName.split("_")[1];
-        String url="http://g-codeeditor.el.r.appspot.com/editor?name="+userId;
+        //uploading bucket report link and user-updated code to db
+        String userId = App.reportName.split("_")[1];
+        String url = "http://g-codeeditor.el.r.appspot.com/editor?name=" + userId;
         String filePath = "src/test/java/App.java";
         String classContent = readClassFileAsString(filePath);
         String escapedClassContent = classContent.replace("\"", "\\\"")
@@ -113,7 +130,7 @@ public abstract class driverConfig extends WebdriverEventListener {
                                     "    \"filter\": {\n" +
                                     "        \"url\": \"" + url + "\"\n" +
                                     "    },\n" +
-                                    "    \"SubmittedCode\":\""+ escapedClassContent +"\",\n" +
+                                    "    \"SubmittedCode\":\"" + escapedClassContent + "\",\n" +
                                     "    \"Output\":\"" + reportName + "\"\n" +
                                     "}";
 
@@ -140,7 +157,7 @@ public abstract class driverConfig extends WebdriverEventListener {
                                 "    \"filter\": {\n" +
                                 "        \"url\": \"" + url + "\"\n" +
                                 "    },\n" +
-                                "    \"code\":\""+ escapedClassContent +"\",\n" +
+                                "    \"code\":\"" + escapedClassContent + "\",\n" +
                                 "    \"output\":\"" + reportName + "\"\n" +
                                 "}";
 
@@ -165,7 +182,6 @@ public abstract class driverConfig extends WebdriverEventListener {
         }
 
 
-
 //        RestAssured.baseURI = "https://us-east-1.aws.data.mongodb-api.com/";
 //        String jsonBody = "{\n" +
 //                "    \"filter\": {\n" +
@@ -182,17 +198,5 @@ public abstract class driverConfig extends WebdriverEventListener {
 //                .put("app/application-0-awqqz/endpoint/updateSeleniumSubmission")
 //                .then()
 //                .extract().response();
-    }
-    public static String readClassFileAsString(String filePath) throws IOException {
-        StringBuilder content = new StringBuilder();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                content.append(line).append('\n');
-            }
-        }
-
-        return content.toString();
     }
 }
