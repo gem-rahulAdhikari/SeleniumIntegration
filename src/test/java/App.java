@@ -15,7 +15,6 @@ public class App extends driverConfig{
     static String reportName="Report_32c9942fa724c4ca523fb373cea688e08c9ea3073ebb53a6dab66898346c7090_0";
 
     @Test
-  @Test
 
 public void demo(){
 driver.get("https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_input_test");
@@ -29,7 +28,6 @@ driver.get("https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_input_test
 
 
 }
-
 
 
 
