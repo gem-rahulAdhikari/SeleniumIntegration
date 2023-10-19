@@ -22,7 +22,6 @@ driver.get("https://www.google.com/");
     WebElement searchInput = driver.findElement(By.xpath("//textarea"));
     System.out.println("3");
     searchInput.sendKeys("selenium");
-    loginButton.click();
     System.out.println("4");
     WebElement title = driver.findElement(By.xpath("(//h3[text()='Selenium'])[1]")); 
     System.out.println("4");
