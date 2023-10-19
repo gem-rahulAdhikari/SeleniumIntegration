@@ -16,7 +16,7 @@ public class App extends driverConfig{
 
     @Test
 public void demo(){
-driver.get("https://mis.geminisolutions.com/");
+driver.get("https://athena-dev.geminisolutions.com/login");
         System.out.println(driver.getCurrentUrl());
         extentTest.log(Status.PASS,driver.getCurrentUrl(),captureScreenshot());
 }
