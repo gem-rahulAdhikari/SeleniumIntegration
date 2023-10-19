@@ -16,16 +16,9 @@ public class App extends driverConfig{
 
     @Test
 public void demo(){
-driver.get("https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_input_test");
-            WebElement iframeElement = driver.findElement(By.xpath("//iframe[@id='iframeResult']")); 
-            driver.switchTo().frame(iframeElement);
-            WebElement inputElement = driver.findElement(By.xpath("//input[@id='fname']"));
-            WebElement inputElement1 = driver.findElement(By.xpath("//input[@type='submit']"));
-            inputElement.sendKeys("Selenium");
-            Actions action=new Actions(driver);
-            action.click(inputElement1).build().perform();
-
-
+driver.get("https://mis.geminisolutions.com/");
+        System.out.println(driver.getCurrentUrl());
+        extentTest.log(Status.PASS,driver.getCurrentUrl()+x,captureScreenshot());
 }
 
 
