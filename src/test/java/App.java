@@ -16,19 +16,22 @@ public class App extends driverConfig{
 
     @Test
 public void demo(){
-System.out.println("1");
-driver.get("https://www.google.com/");
-    System.out.println("2");
-    WebElement searchInput = driver.findElement(By.xpath("//textarea"));
-    System.out.println("3");
+     driver.get("https://www.google.com/");
+     WebElement searchInput = driver.findElement(By.xpath("//textarea"));
     searchInput.sendKeys("selenium");
     searchInput.sendKeys(Keys.RETURN);
-    System.out.println("4");
-    WebElement title = driver.findElement(By.xpath("(//h3[text()='Selenium'])[1]")); 
-    System.out.println("4");
-    title.getText();
-    System.out.println("5");
-    extentTest.log(Status.PASS,driver.getCurrentUrl(),captureScreenshot());
+     WebElement title = driver.findElement(By.xpath("(//h3[text()='Selenium'])[1]")); 
+     String fetchedTitle=title.getText();
+     if("Selenium".equals(fetchedTitle))
+     {
+         extentTest.log(Status.PASS,captureScreenshot());
+     }
+    else
+     {
+         extentTest.log(Status.FAIL,captureScreenshot());
+     }
+    
+     extentTest.log(Status.PASS,driver.getCurrentUrl(),captureScreenshot());
 }
 
 
