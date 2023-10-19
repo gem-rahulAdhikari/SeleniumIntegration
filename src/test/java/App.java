@@ -12,7 +12,7 @@ import java.math.*;
 import java.time.*;
 
 public class App extends driverConfig{
-    static String reportName="Report_b092c8b27b1b4718bc1dfb4cc1eecdafadac8cee4cf9ceaca1a82699aa48db93_0";
+    static String reportName="Report_b092c8b27b1b4718bc1dfb4cc1eecdafadac8cee4cf9ceaca1a82699aa48db93_1";
 
     @Test
 public void demo(){  
@@ -25,11 +25,11 @@ driver.get("https://www.google.com/");
      String fetchedTitle=title.getText();
      if("Selenium".equals(fetchedTitle))
      {
-         extentTest.log(Status.PASS,captureScreenshot());
+         extentTest.log(Status.PASS,"text matched successfully.",captureScreenshot());
      }
     else
      {
-         extentTest.log(Status.FAIL,captureScreenshot());
+         extentTest.log(Status.FAIL,"Failed to match text.",captureScreenshot());
      }
 
      extentTest.log(Status.PASS,driver.getCurrentUrl(),captureScreenshot());
