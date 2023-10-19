@@ -17,15 +17,16 @@ public class App extends driverConfig{
     @Test
 public void demo(){
 System.out.println("1");
-driver.get("https://jewel.gemecosystem.com/");
+driver.get("https://www.google.com/");
     System.out.println("2");
-    WebElement loginButton = driver.findElement(By.xpath("//span[text()='Log in']"));
+    WebElement searchInput = driver.findElement(By.xpath("//textarea"));
     System.out.println("3");
+    searchInput.sendKeys("selenium");
     loginButton.click();
     System.out.println("4");
-    WebElement userName = driver.findElement(By.xpath("//input[@id='usernameField']")); 
+    WebElement title = driver.findElement(By.xpath("(//h3[text()='Selenium'])[1]")); 
     System.out.println("4");
-    userName.sendKeys("Rahul");
+    title.getText();
     System.out.println("5");
     extentTest.log(Status.PASS,driver.getCurrentUrl(),captureScreenshot());
 }
