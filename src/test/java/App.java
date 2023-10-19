@@ -16,11 +16,12 @@ public class App extends driverConfig{
 
     @Test
 public void demo(){
-driver.get("https://www.w3schools.com/html/html_elements.asp");
-    WebElement inputElement = driver.findElement(By.xpath("//span[@class='color_h1']"));
-    String elementText = inputElement.getText();
-    System.out.println("Text of the span element: " + elementText);
-    System.out.println(driver.getCurrentUrl());
+driver.get("https://jewel.gemecosystem.com/");
+    WebElement loginButton = driver.findElement(By.xpath("//button//span[text()='Log in']"));
+    loginButton.click();
+    thread.sleep(2000);
+    WebElement userName = driver.findElement(By.xpath("//input[@id='usernameField']")); 
+    userName.sendKeys("Rahul");
     extentTest.log(Status.PASS,driver.getCurrentUrl(),captureScreenshot());
 }
 
