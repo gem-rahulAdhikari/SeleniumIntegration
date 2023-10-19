@@ -16,9 +16,12 @@ public class App extends driverConfig{
 
     @Test
 public void demo(){
-driver.get("https://athena-dev.geminisolutions.com/login");
-        System.out.println(driver.getCurrentUrl());
-        extentTest.log(Status.PASS,driver.getCurrentUrl(),captureScreenshot());
+driver.get("https://www.w3schools.com/html/html_elements.asp");
+    WebElement inputElement = driver.findElement(By.xpath("//span[@class='color_h1']"));
+    String elementText = inputElement.getText();
+    System.out.println("Text of the span element: " + elementText);
+    System.out.println(driver.getCurrentUrl());
+    extentTest.log(Status.PASS,driver.getCurrentUrl(),captureScreenshot());
 }
 
 
