@@ -42,6 +42,8 @@ public abstract class driverConfig extends WebdriverEventListener {
         extentReports = new ExtentReports();
         extentReports.attachReporter(htmlReporter);
         extentTest = extentReports.createTest(getClass().getSimpleName());
+        extentReports.setSystemInfo("OS Info",System.getProperty("os.name"));
+        extentReports.setSystemInfo("Java Version",System.getProperty("java.specification.version"));
     }
 
     @BeforeMethod
