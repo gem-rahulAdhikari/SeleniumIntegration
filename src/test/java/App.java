@@ -12,7 +12,7 @@ import java.math.*;
 import java.time.*;
 
 public class App extends driverConfig{
-    static String reportName="Report_5308c90c2bf1d9dd94f3f17dc8e5d2d0941a279dd4f4cbfc7267eb927a170648_0";
+    static String reportName="Report_d57bc5785be7dfc774f8b69c8f08e3556c4d94060006fd5f91c51b0feb82f742_0";
 
     @Test
 public void demo(){  
@@ -35,6 +35,32 @@ driver.get("https://www.google.com/");
      extentTest.log(Status.PASS,driver.getCurrentUrl(),captureScreenshot());
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
