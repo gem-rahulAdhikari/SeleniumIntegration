@@ -22,7 +22,7 @@ public class compileExceptionsUploader {
         System.out.println("is it is null");
         if (fileFound == null) {
             Properties reportNameReader = new Properties();
-            reportNameReader.load(new FileInputStream("./reportName.properties"));
+            reportNameReader.load(new FileInputStream("./seleniumExecution/reportName.properties"));
             executionName = reportNameReader.getProperty("reportName");
             String reportName = "https://storage.googleapis.com/" + bucketName + "/" + executionName + ".txt";
             mongoTransfer();
