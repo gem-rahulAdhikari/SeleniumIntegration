@@ -5,7 +5,7 @@ on:
     branches:
       - beta1  # Change this to your default branch if different
     paths:
-      - '/src/main/java/App.java'
+      - 'src/main/java/App.java'
 
 jobs:
   run_tests:
@@ -21,7 +21,7 @@ jobs:
 
       - name: Build and run Selenium tests
         run: |
-          cd seleniumExecution
+          # cd seleniumExecution
           mkdir test-output
           FILE_NAME=reportName.properties
 
@@ -39,8 +39,8 @@ jobs:
       - name: list files
         if: always()
         run: |
-          cd seleniumExecution
-          echo "ls selenium output"
+          # cd seleniumExecution
+          # echo "ls selenium output"
           ls
           echo
           echo "ls test-output"
