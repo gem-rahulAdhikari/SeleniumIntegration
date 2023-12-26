@@ -15,7 +15,7 @@ public class compileExceptionsUploader {
     static String executionName;
 
     public static void main(String[] args)throws IOException {
-        String directory = "./seleniumExecution/test-output";
+        String directory = "./test-output";
         String fileExtension = ".html";
         Path dir = Paths.get(directory);
         String fileFound = findFileInDirectory(dir, fileExtension);
@@ -23,8 +23,9 @@ public class compileExceptionsUploader {
         System.out.println("is it is null");
         if (fileFound == null) {
             Properties reportNameReader = new Properties();
-            reportNameReader.load(new FileInputStream("./seleniumExecution/reportName.properties"));
+            reportNameReader.load(new FileInputStream("./reportName.properties"));
             executionName = reportNameReader.getProperty("reportName");
+            System.out.println(executionName+" execution name");
             String reportName = "https://storage.googleapis.com/" + bucketName + "/" + executionName + ".txt";
             mongoTransfer();
         }
@@ -65,24 +66,12 @@ public class compileExceptionsUploader {
         String userId = executionName.split("_")[1];
         // String url = "http://g-codeeditor.el.r.appspot.com/editor?name=" + userId;
         String url=userId;
-        String javaPath = "./seleniumExecution/src/main/java/App.java";
-        String compileTxtPath="./seleniumExecution/test-output/" + executionName + ".txt";
+        String javaPath = "./src/main/java/App.java";
+        String compileTxtPath="./test-output/" + executionName + ".txt";
         String classContent = readClassFileAsString(javaPath);
         String compileError_content = readClassFileAsString(compileTxtPath);
         compileError_content = compileError_content.split("/target/classes")[1];
-        String[] compileError_content_formatted = compileError_content.split("\u001B[m]");
-        System.out.println(compileError_content_formatted);
-        // System.out.println("hello");
-        // System.out.println(Arrays.toString(compileError_content_formatted));
-        // System.out.println("hello");
-        // for (String error : compileError_content_formatted) {
-        //        System.out.println(error);
-        //       }
-        // String formattedErrors = String.join(", ", compileError_content_formatted);
-        // System.out.println(formattedErrors);
-        // String formattedCompileError = Arrays.toString(compileError_content_formatted);
-        // Class<? extends String> type = formattedCompileError.getClass();
-        // System.out.println("Type of hello: " + type.getName());
+
         String escapedClassContent = classContent.replace("\"", "\\\"")
                 .replace("\n", "\\n")
                 .replace("\r", "\\r");
@@ -126,7 +115,7 @@ public class compileExceptionsUploader {
                                     "        \"url\": \"" + url + "\"\n" +
                                     "    },\n" +
                                     "    \"SubmittedCode\":\"" + escapedClassContent + "\",\n" +
-                                    "    \"Output\":\"" +compileError_content_formatted+ "\"\n" +
+                                    "    \"Output\":\"" +compileError_content+ "\"\n" +
                                     "}";
 
                             try (DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream())) {
@@ -153,7 +142,7 @@ public class compileExceptionsUploader {
                                 "        \"url\": \"" + url + "\"\n" +
                                 "    },\n" +
                                 "    \"code\":\"" + escapedClassContent + "\",\n" +
-                                "    \"output\":\"" +compileError_content_formatted+ "\"\n" +
+                                "    \"output\":\"" +compileError_content+ "\"\n" +
                                 "}";
 
 
