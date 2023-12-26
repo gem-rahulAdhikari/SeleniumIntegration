@@ -1,6 +1,5 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
-import java.util.Arrays;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -14,7 +13,7 @@ public class compileExceptionsUploader {
     static String bucketName = "selenium-reportdata";
     static String executionName;
 
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws IOException {
         String directory = "./test-output";
         String fileExtension = ".html";
         Path dir = Paths.get(directory);
@@ -25,11 +24,12 @@ public class compileExceptionsUploader {
             Properties reportNameReader = new Properties();
             reportNameReader.load(new FileInputStream("./reportName.properties"));
             executionName = reportNameReader.getProperty("reportName");
-            System.out.println(executionName+" execution name");
+            System.out.println(executionName + " execution name");
             String reportName = "https://storage.googleapis.com/" + bucketName + "/" + executionName + ".txt";
             mongoTransfer();
         }
     }
+
     public static String findFileInDirectory(Path directory, String fileExtension) throws IOException {
         final String[] foundFile = {null};
 
@@ -46,6 +46,7 @@ public class compileExceptionsUploader {
 
         return foundFile[0];
     }
+
     public static String readClassFileAsString(String filePath) throws IOException {
         //Reading user-updated code
         StringBuilder content = new StringBuilder();
@@ -65,16 +66,23 @@ public class compileExceptionsUploader {
         System.out.println("in mongo upload function");
         String userId = executionName.split("_")[1];
         // String url = "http://g-codeeditor.el.r.appspot.com/editor?name=" + userId;
-        String url=userId;
+        String url = userId;
         String javaPath = "./src/main/java/App.java";
-        String compileTxtPath="./test-output/" + executionName + ".txt";
+        String compileTxtPath = "./test-output/" + executionName + ".txt";
         String classContent = readClassFileAsString(javaPath);
-        String compileError_content = readClassFileAsString(compileTxtPath);
-        compileError_content = compileError_content.split("/target/classes")[1];
-
-        String escapedClassContent = classContent.replace("\"", "\\\"")
+        classContent=classContent.replace("\"", "\\\"")
                 .replace("\n", "\\n")
                 .replace("\r", "\\r");
+        String compileError_content = readClassFileAsString(compileTxtPath);
+        compileError_content = compileError_content.split("/target/classes")[1];
+        compileError_content=compileError_content.replace("\"", "\\\"")
+                .replace("\n", "\\n")
+                .replace("\r", "\\r");
+//        RestAssured.baseURI = "https://us-east-1.aws.data.mongodb-api.com/app/application-0-awqqz/endpoint/updateSeleniumSubmission";
+//        String requestPayload = "{\r\n    \"filter\":{\r\n        \"url\":\""+url+"\"\r\n    },\r\n    \"SubmittedCode\":\""+classContent+"\",\r\n    \"Output\":\""+compileError_content+"\"\r\n}";
+//        Response responsex = RestAssured.given().contentType("application/json").body(requestPayload).put().then().extract().response();
+//        responsex.body().prettyPrint();
+
         try {
             URL getUrl = new URL("https://us-east-1.aws.data.mongodb-api.com/app/application-0-awqqz/endpoint/getSeleniumOutput"); // Replace with your actual GET API URL
             HttpURLConnection getConnection = (HttpURLConnection) getUrl.openConnection();
@@ -109,13 +117,12 @@ public class compileExceptionsUploader {
                             connection.setRequestMethod("PUT");
                             connection.setRequestProperty("Content-Type", "application/json");
                             connection.setDoOutput(true);
-
                             String putData = "{\n" +
                                     "    \"filter\": {\n" +
                                     "        \"url\": \"" + url + "\"\n" +
                                     "    },\n" +
-                                    "    \"SubmittedCode\":\"" + escapedClassContent + "\",\n" +
-                                    "    \"Output\":\"" +compileError_content+ "\"\n" +
+                                    "    \"SubmittedCode\":\"" + classContent + "\",\n" +
+                                    "    \"Output\":\"" + compileError_content + "\"\n" +
                                     "}";
 
                             try (DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream())) {
@@ -141,8 +148,8 @@ public class compileExceptionsUploader {
                                 "    \"filter\": {\n" +
                                 "        \"url\": \"" + url + "\"\n" +
                                 "    },\n" +
-                                "    \"code\":\"" + escapedClassContent + "\",\n" +
-                                "    \"output\":\"" +compileError_content+ "\"\n" +
+                                "    \"SubmittedCode\":\"" + classContent + "\",\n" +
+                                "    \"output\":\"" + compileError_content + "\"\n" +
                                 "}";
 
 
