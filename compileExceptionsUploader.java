@@ -71,15 +71,16 @@ public class compileExceptionsUploader {
         String compileError_content = readClassFileAsString(compileTxtPath);
         compileError_content = compileError_content.split("/target/classes")[1];
         String[] compileError_content_formatted = compileError_content.split("\u001B[m]");
+        System.out.println(compileError_content_formatted);
         // System.out.println("hello");
         // System.out.println(Arrays.toString(compileError_content_formatted));
         // System.out.println("hello");
         // for (String error : compileError_content_formatted) {
         //        System.out.println(error);
         //       }
-        String formattedErrors = String.join(", ", compileError_content_formatted);
-        System.out.println(formattedErrors);
-        String formattedCompileError = Arrays.toString(compileError_content_formatted);
+        // String formattedErrors = String.join(", ", compileError_content_formatted);
+        // System.out.println(formattedErrors);
+        // String formattedCompileError = Arrays.toString(compileError_content_formatted);
         // Class<? extends String> type = formattedCompileError.getClass();
         // System.out.println("Type of hello: " + type.getName());
         String escapedClassContent = classContent.replace("\"", "\\\"")
@@ -125,7 +126,7 @@ public class compileExceptionsUploader {
                                     "        \"url\": \"" + url + "\"\n" +
                                     "    },\n" +
                                     "    \"SubmittedCode\":\"" + escapedClassContent + "\",\n" +
-                                    "    \"Output\":\"" +formattedErrors+ "\"\n" +
+                                    "    \"Output\":\"" +compileError_content_formatted+ "\"\n" +
                                     "}";
 
                             try (DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream())) {
@@ -152,7 +153,7 @@ public class compileExceptionsUploader {
                                 "        \"url\": \"" + url + "\"\n" +
                                 "    },\n" +
                                 "    \"code\":\"" + escapedClassContent + "\",\n" +
-                                "    \"output\":\"" + formattedCompileError + "\"\n" +
+                                "    \"output\":\"" +compileError_content_formatted+ "\"\n" +
                                 "}";
 
 
