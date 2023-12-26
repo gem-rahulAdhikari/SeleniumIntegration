@@ -120,7 +120,7 @@ public class compileExceptionsUploader {
                                     "        \"url\": \"" + url + "\"\n" +
                                     "    },\n" +
                                     "    \"SubmittedCode\":\"" + escapedClassContent + "\",\n" +
-                                    "    \"Output\":\"" +"helloo"+ "\"\n" +
+                                    "    \"Output\":\"" +formattedCompileError+ "\"\n" +
                                     "}";
 
                             try (DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream())) {
