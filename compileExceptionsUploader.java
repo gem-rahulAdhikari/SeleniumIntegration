@@ -74,9 +74,9 @@ public class compileExceptionsUploader {
         // System.out.println("hello");
         // System.out.println(Arrays.toString(compileError_content_formatted));
         // System.out.println("hello");
-        for (String error : compileError_content_formatted) {
-               System.out.println(error);
-              }
+        // for (String error : compileError_content_formatted) {
+        //        System.out.println(error);
+        //       }
         String formattedErrors = String.join(", ", compileError_content_formatted);
         System.out.println(formattedErrors);
         String formattedCompileError = Arrays.toString(compileError_content_formatted);
