@@ -75,6 +75,8 @@ public class compileExceptionsUploader {
         // System.out.println(Arrays.toString(compileError_content_formatted));
         // System.out.println("hello");
         String formattedCompileError = Arrays.toString(compileError_content_formatted);
+        Class<? extends String> type = formattedCompileError.getClass();
+        System.out.println("Type of hello: " + type.getName());
         String escapedClassContent = classContent.replace("\"", "\\\"")
                 .replace("\n", "\\n")
                 .replace("\r", "\\r");
