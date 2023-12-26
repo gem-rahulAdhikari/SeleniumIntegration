@@ -71,7 +71,9 @@ public class compileExceptionsUploader {
         String compileError_content = readClassFileAsString(compileTxtPath);
         compileError_content = compileError_content.split("/target/classes")[1];
         String[] compileError_content_formatted = compileError_content.split("\u001B[m]");
+        System.out.println("hello");
         System.out.println(Arrays.toString(compileError_content_formatted));
+        System.out.println("hello");
         String formattedCompileError = Arrays.toString(compileError_content_formatted);
         String escapedClassContent = classContent.replace("\"", "\\\"")
                 .replace("\n", "\\n")
