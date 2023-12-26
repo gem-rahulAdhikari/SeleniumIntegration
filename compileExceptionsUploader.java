@@ -72,6 +72,7 @@ public class compileExceptionsUploader {
         compileError_content = compileError_content.split("/target/classes")[1];
         String[] compileError_content_formatted = compileError_content.split("\u001B[m]");
         System.out.println(Arrays.toString(compileError_content_formatted));
+        String formattedCompileError = Arrays.toString(compileError_content_formatted);
         String escapedClassContent = classContent.replace("\"", "\\\"")
                 .replace("\n", "\\n")
                 .replace("\r", "\\r");
@@ -142,7 +143,7 @@ public class compileExceptionsUploader {
                                 "        \"url\": \"" + url + "\"\n" +
                                 "    },\n" +
                                 "    \"code\":\"" + escapedClassContent + "\",\n" +
-                                "    \"output\":\"" + compileError_content_formatted + "\"\n" +
+                                "    \"output\":\"" + formattedCompileError + "\"\n" +
                                 "}";
 
 
