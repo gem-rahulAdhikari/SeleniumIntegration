@@ -16,12 +16,15 @@ public class App extends driverConfig {
 
     @Test
     public void demo() {
-        driver.get("https://www.google.com/");
-        WebElement searchInput = driver.findElement(By.xpath("//textarea"));
-        searchInput.sendKeys("selenium");
-        searchInput.sendKeys(Keys.RETURN);
-        WebElement title = driver.findElement(By.xpath("(//h3[text()='Selenium'])[1]"));
-        String fetchedTitle = title.getText();
-        System.out.println(fetchedTitle + " start2"); 
+        RestAssured.baseURI = "https://reqres.in";
+
+        // Example GET request to retrieve a user (user with ID 1)
+        Response response = RestAssured.get("/api/users/1");
+
+        // Print the response status code
+        System.out.println("Status Code: " + response.getStatusCode());
+
+        // Print the response body
+        System.out.println("Response Body: " + response.getBody().asString());
     }
 }
