@@ -108,11 +108,11 @@ public abstract class driverConfig extends WebdriverEventListener {
         try {
             System.out.println("in upload function");
             String filePath = "./test-output/"+executionName+".html";
-            // String reportContent = new String(Files.readAllBytes(Paths.get(filePath)));
+            String reportContent = new String(Files.readAllBytes(Paths.get(filePath)));
 
-            // // Print the HTML content to the console
-            // System.out.println(reportContent);
-            // File file=new File(filePath);
+            // Print the HTML content to the console
+            System.out.println(reportContent);
+            File file=new File(filePath);
             RestAssured.baseURI = "https://storage.googleapis.com/upload/storage/v1/b/"+bucketName+"/o";
             RestAssured.given().header("Authorization", "Bearer " + token).queryParam("uploadType","media").queryParam("name",executionName+".html").contentType("text/html").body(file).post().then().statusCode(200);
         } catch (Exception e) {
