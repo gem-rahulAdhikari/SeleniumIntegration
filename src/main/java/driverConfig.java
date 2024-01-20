@@ -16,7 +16,10 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import io.restassured.RestAssured;
-
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
