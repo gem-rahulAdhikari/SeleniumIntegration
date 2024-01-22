@@ -19,6 +19,7 @@ public class App extends driverConfig {
     @Test
     public void demo() {
         RestAssured.baseURI = "https://reqres.in";
+        
         // Perform Rest Assured GET request
         Response response = RestAssured.get("/api/users/1");
 
