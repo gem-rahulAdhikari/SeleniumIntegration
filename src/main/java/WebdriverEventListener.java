@@ -7,6 +7,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.support.events.WebDriverListener;
 import io.restassured.response.Response;
+import io.restassured.response.ResponseAware;
 import java.lang.reflect.Method;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -14,7 +15,7 @@ import java.lang.reflect.Method;
 import java.util.Base64;
 import java.util.Collection;
 
-public class WebdriverEventListener implements WebDriverListener {
+public class WebdriverEventListener implements WebDriverListener,ResponseAware {
     public static ExtentTest extentTest;
     public static Boolean isSeleniumException = false;
     ExtentReports extentReports;
