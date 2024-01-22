@@ -14,7 +14,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Base64;
 import java.util.Collection;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
 
+
+@Aspect
 public class WebdriverEventListener implements WebDriverListener {
     public static ExtentTest extentTest;
     public static Boolean isSeleniumException = false;
@@ -29,11 +33,12 @@ public class WebdriverEventListener implements WebDriverListener {
     }
 
     //functions for overriding default methods for adding default selenium commands to report
-    @Override
-    public void afterGet(String endpoint, Response response) {
-        extentTest.log(Status.PASS, "Sent GET request to endpoint: " + endpoint);
-        extentTest.log(Status.PASS, "Status Code: " + response.getStatusCode());
-        extentTest.log(Status.PASS, "Response Body:\n" + response.getBody().asString());
+     @AfterReturning(pointcut = "execution(* io.restassured.RestAssured.get(..))", returning = "response")
+    public void afterRestAssuredGet(Response response) {
+        // Your custom logic here
+        System.out.println("Custom logic after RestAssured .get request");
+        System.out.println("Status Code: " + response.getStatusCode());
+        System.out.println("Response Body:\n" + response.getBody().asString());
     }
     
     @Override
