@@ -15,7 +15,7 @@ import java.lang.reflect.Method;
 import java.util.Base64;
 import java.util.Collection;
 
-public class WebdriverEventListener implements WebDriverListener,ResponseAware {
+public class WebdriverEventListener implements WebDriverListener {
     public static ExtentTest extentTest;
     public static Boolean isSeleniumException = false;
     ExtentReports extentReports;
