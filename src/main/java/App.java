@@ -19,14 +19,11 @@ public class App extends driverConfig {
     @Test
     public void demo() {
         RestAssured.baseURI = "https://reqres.in";
-        // Create an instance of RestAssuredConfig
-        restAssuredConfig = new RestAssuredConfig(test);
-
+        
         // Perform Rest Assured GET request
         Response response = RestAssured.get("/api/users/1");
 
-        // Log steps in Extent Report
-        restAssuredConfig.afterGet("/api/users/1", response);
+        
         
             
 
