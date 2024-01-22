@@ -33,7 +33,7 @@ jobs:
           cd test-output
           > ${prop_value}.txt
           cd ..
-          mvn clean install  # Add this line to run mvn clean install
+          mvn clean install -U  # Add this line to run mvn clean install
           mvn test -DsuiteXmlFile=testng.xml
           # mvn test -DsuiteXmlFile=testng.xml >> ./test-output/${prop_value}.txt
         shell: bash
