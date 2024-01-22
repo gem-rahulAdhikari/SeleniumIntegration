@@ -112,8 +112,8 @@
                     <groupId>com.sun</groupId>
                     <artifactId>tools</artifactId>
                     <version>11.0.21</version> <!-- Adjust the version according to your JDK -->
-                    <scope>system</scope>
-                    <systemPath>${java.home}/../lib/tools.jar</systemPath>
+<!--                     <scope>system</scope>
+                    <systemPath>${java.home}/../lib/tools.jar</systemPath> -->
                 </dependency>
             </dependencies>
             <configuration>
