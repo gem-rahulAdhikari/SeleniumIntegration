@@ -6,6 +6,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import java.lang.reflect.Method;
 import java.lang.*;
 import java.util.*;
 import java.awt.*;
@@ -17,13 +18,16 @@ public class App extends driverConfig {
 
     @Test
     public void demo() {
-         driver.get("https://www.google.com/");    
-        WebElement searchInput = driver.findElement(By.xpath("//textarea"));
-        searchInput.sendKeys("selenium");
-        searchInput.sendKeys(Keys.RETURN);
-        WebElement title = driver.findElement(By.xpath("(//h3[text()='Selenium'])[1]"));
-        String fetchedTitle = title.getText();
-        System.out.println(fetchedTitle + " start2"); 
+        RestAssured.baseURI = "https://reqres.in";
+
+        // Create an instance of RestAssuredConfig
+        restAssuredConfig = new RestAssuredConfig(test);
+
+        // Perform Rest Assured GET request
+        Response response = RestAssured.get("/api/users/1");
+
+        // Log steps in Extent Report
+        restAssuredConfig.afterGet("/api/users/1", response);
         
             
 
