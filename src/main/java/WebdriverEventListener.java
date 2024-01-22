@@ -28,6 +28,13 @@ public class WebdriverEventListener implements WebDriverListener {
 
     //functions for overriding default methods for adding default selenium commands to report
     @Override
+    public void afterGet(String endpoint, Response response) {
+        extentTest.log(Status.PASS, "Sent GET request to endpoint: " + endpoint);
+        extentTest.log(Status.PASS, "Status Code: " + response.getStatusCode());
+        extentTest.log(Status.PASS, "Response Body:\n" + response.getBody().asString());
+    }
+    
+    @Override
     public void afterGet(WebDriver driver, String url) {
         extentTest.log(Status.PASS, "Launched Url Successfully : " + url, captureScreenshot());
     }
