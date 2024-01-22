@@ -19,7 +19,6 @@ public class App extends driverConfig {
     @Test
     public void demo() {
         RestAssured.baseURI = "https://reqres.in";
-
         // Create an instance of RestAssuredConfig
         restAssuredConfig = new RestAssuredConfig(test);
 
