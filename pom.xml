@@ -63,39 +63,30 @@
 
         </dependency>
               <dependency>
+        <groupId>com.sun</groupId>
+        <artifactId>tools</artifactId>
+        <version>11.0.21</version> <!-- Adjust the version according to your JDK -->
+    </dependency>
+              <dependency>
         <groupId>org.aspectj</groupId>
         <artifactId>aspectjrt</artifactId>
         <version>1.9.7</version>
     </dependency>
     </dependencies>
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M9</version>
-                <configuration>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
-                    </suiteXmlFiles>
-                </configuration>
-            </plugin>
-                 <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>aspectj-maven-plugin</artifactId>
-            <version>1.11</version>
-            <executions>
-                <execution>
-                    <goals>
-                        <goal>compile</goal>
-                    </goals>
-                </execution>
-            </executions>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.0.0-M9</version>
             <configuration>
-                <complianceLevel>1.8</complianceLevel>
+                <suiteXmlFiles>
+                    <suiteXmlFile>testng.xml</suiteXmlFile>
+                </suiteXmlFiles>
             </configuration>
         </plugin>
-                   <plugin>
+
+        <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>aspectj-maven-plugin</artifactId>
             <version>1.11</version>
@@ -107,20 +98,11 @@
                     </goals>
                 </execution>
             </executions>
-            <dependencies>
-                <dependency>
-                    <groupId>com.sun</groupId>
-                    <artifactId>tools</artifactId>
-                    <version>11.0.21</version> <!-- Adjust the version according to your JDK -->
-<!--                     <scope>system</scope>
-                    <systemPath>${java.home}/../lib/tools.jar</systemPath> -->
-                </dependency>
-            </dependencies>
             <configuration>
                 <source>1.8</source> <!-- or your Java version -->
                 <target>1.8</target> <!-- or your Java version -->
             </configuration>
         </plugin>
-        </plugins>
-    </build>
+    </plugins>
+</build>
 </project>
