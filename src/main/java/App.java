@@ -23,6 +23,5 @@ public class App extends driverConfig {
         Response response = RestAssured.given().get().then().extract().response();
         response.prettyPrint();
         System.out.println("Test insertion App");
-        
     }
 }
