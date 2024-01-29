@@ -21,5 +21,6 @@ public class App extends driverConfig {
         RestAssured.baseURI = "https://reqres.in";        
         // Perform Rest Assured GET request
           Response response = RestAssured.get("/api/users/1");
+        
     }
 }
