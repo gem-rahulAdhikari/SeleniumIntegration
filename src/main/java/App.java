@@ -22,8 +22,5 @@ public class App extends driverConfig {
         // Perform Rest Assured GET request
           Response response = RestAssured.get("/api/users/1");
 
-        
-        
-
     }
 }
