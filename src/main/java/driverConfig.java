@@ -63,58 +63,58 @@ public abstract class driverConfig extends WebdriverEventListener {
     @BeforeMethod
     public void setWebDriver() {
         //Chromedriver setup
-        WebDriverManager.chromedriver().setup();
+        // WebDriverManager.chromedriver().setup();
         
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
-        options.addArguments("start-maximized");
-        options.addArguments("disable-infobars");
-        options.addArguments("--disable-extensions");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--remote-allow-origins=*");
-        WebDriverListener listener = new WebdriverEventListener();
-        wDriver.set(new ChromeDriver(options));
-        WebDriver decorated = new EventFiringDecorator(listener).decorate(wDriver.get());
-        wDriver.set(decorated);
-        driver = wDriver.get();
-        System.out.println(driver);
+        // ChromeOptions options = new ChromeOptions();
+        // options.addArguments("--headless");
+        // options.addArguments("start-maximized");
+        // options.addArguments("disable-infobars");
+        // options.addArguments("--disable-extensions");
+        // options.addArguments("--disable-dev-shm-usage");
+        // options.addArguments("--no-sandbox");
+        // options.addArguments("--remote-allow-origins=*");
+        // WebDriverListener listener = new WebdriverEventListener();
+        // wDriver.set(new ChromeDriver(options));
+        // WebDriver decorated = new EventFiringDecorator(listener).decorate(wDriver.get());
+        // wDriver.set(decorated);
+        // driver = wDriver.get();
+        // System.out.println(driver);
     }
 
     @AfterMethod
     public void tearDown() {
         //terminating execution
-        driver.quit();
+        // driver.quit();
         extentReports.flush();
     }
 
     @AfterSuite
     public void reportMover() throws IOException {
-        System.out.println("in afterSuite");
-        //Uploading report to gcloud bucket storage
-        System.out.println("Execution complete, report manipulation started");
-        String serviceAccountKeyPath = "./g-code-editor-417ccbad5803.json";
-        GoogleCredentials credentials = ServiceAccountCredentials.fromStream(new FileInputStream(serviceAccountKeyPath))
-                .createScoped("https://www.googleapis.com/auth/cloud-platform");
-        AccessToken accessToken = credentials.refreshAccessToken();
-        String token = accessToken.getTokenValue();
-        System.out.println("Access Token: " + token);
-        uploadReport(token);
-        String reportName = "https://storage.googleapis.com/"+bucketName+"/" + executionName + ".html";
-        mongoTransfer(reportName);
+        // System.out.println("in afterSuite");
+        // //Uploading report to gcloud bucket storage
+        // System.out.println("Execution complete, report manipulation started");
+        // String serviceAccountKeyPath = "./g-code-editor-417ccbad5803.json";
+        // GoogleCredentials credentials = ServiceAccountCredentials.fromStream(new FileInputStream(serviceAccountKeyPath))
+        //         .createScoped("https://www.googleapis.com/auth/cloud-platform");
+        // AccessToken accessToken = credentials.refreshAccessToken();
+        // String token = accessToken.getTokenValue();
+        // System.out.println("Access Token: " + token);
+        // uploadReport(token);
+        // String reportName = "https://storage.googleapis.com/"+bucketName+"/" + executionName + ".html";
+        // mongoTransfer(reportName);
     }
 
  public void uploadReport(String token) {
         try {
-            System.out.println("in upload function");
-            String filePath = "./test-output/"+executionName+".html";
-            String reportContent = new String(Files.readAllBytes(Paths.get(filePath)));
+            // System.out.println("in upload function");
+            // String filePath = "./test-output/"+executionName+".html";
+            // String reportContent = new String(Files.readAllBytes(Paths.get(filePath)));
 
-            // Print the HTML content to the console
-            System.out.println(reportContent);
-            File file=new File(filePath);
-            RestAssured.baseURI = "https://storage.googleapis.com/upload/storage/v1/b/"+bucketName+"/o";
-            RestAssured.given().header("Authorization", "Bearer " + token).queryParam("uploadType","media").queryParam("name",executionName+".html").contentType("text/html").body(file).post().then().statusCode(200);
+            // // Print the HTML content to the console
+            // System.out.println(reportContent);
+            // File file=new File(filePath);
+            // RestAssured.baseURI = "https://storage.googleapis.com/upload/storage/v1/b/"+bucketName+"/o";
+            // RestAssured.given().header("Authorization", "Bearer " + token).queryParam("uploadType","media").queryParam("name",executionName+".html").contentType("text/html").body(file).post().then().statusCode(200);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
