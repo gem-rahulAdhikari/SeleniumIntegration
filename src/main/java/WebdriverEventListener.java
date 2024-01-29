@@ -3,6 +3,9 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.model.Media;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.support.events.WebDriverListener;
@@ -32,12 +35,23 @@ public class WebdriverEventListener implements WebDriverListener {
     }
 
     //functions for overriding default methods for adding default selenium commands to report
-     @AfterReturning(pointcut = "execution(* io.restassured.RestAssured.get(..))", returning = "response")
-    public void afterRestAssuredGet(Response response) {
-        // Your custom logic here
-        System.out.println("Custom logic after RestAssured .get request");
-        System.out.println("Status Code: " + response.getStatusCode());
-        System.out.println("Response Body:\n" + response.getBody().asString());
+    @Pointcut("execution(* io.restassured.specification.RequestSpecification.get(..))")
+    public void getRequestPointcut() {
+    }
+
+    @Before("getRequestPointcut()")
+    public void logBeforeGetRequest() {
+        extentTest.log(Status.INFO,"cefwgy");
+        System.out.println("GET Request URL: ");
+        // You can log additional information here if needed
+    }
+
+    @AfterReturning(pointcut = "getRequestPointcut()", returning = "response")
+    public void logAfterGetRequest(JoinPoint joinPoint, Object response) {
+        extentTest.log(Status.INFO,"cefwgy");
+
+        System.out.println("GET Request completed with status code: " + ((io.restassured.response.Response) response).getStatusCode());
+        // You can log additional information here if needed
     }
     
     @Override
