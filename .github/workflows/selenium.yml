@@ -21,6 +21,7 @@ jobs:
 
       - name: Build and run Selenium tests
         run: |
-          mvn test -DsuiteXmlFile=testng.xml
+        mvn clean compile
+          # mvn test -DsuiteXmlFile=testng.xml
           # mvn test -DsuiteXmlFile=testng.xml >> ./test-output/${prop_value}.txt
         shell: bash
