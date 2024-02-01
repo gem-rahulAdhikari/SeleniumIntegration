@@ -24,10 +24,12 @@ import java.util.Properties;
 
 
 public abstract class driverConfig extends WebdriverEventListener {
+    ExtentReports extentReports;
     public static WebDriver driver;
     static ThreadLocal<WebDriver> wDriver = new ThreadLocal<WebDriver>();
     public String bucketName = "selenium-reportdata";
     String executionName;
+    String runType;
 
     public static String readClassFileAsString(String filePath) throws IOException {
         //Reading user-updated code
@@ -47,58 +49,66 @@ public abstract class driverConfig extends WebdriverEventListener {
     public void reporter() throws IOException {
         Properties reportNameReader = new Properties();
         reportNameReader.load(new FileInputStream("./reportName.properties"));
-        executionName=reportNameReader.getProperty("reportName");
-        //Extent report initialization
-        ExtentSparkReporter htmlReporter = new ExtentSparkReporter("test-output/" + executionName + ".html");
-        extentReports = new ExtentReports();
-        extentReports.attachReporter(htmlReporter);
-        extentTest = extentReports.createTest(getClass().getSimpleName());
-        extentReports.setSystemInfo("OS Info", System.getProperty("os.name"));
-        extentReports.setSystemInfo("Java Version", System.getProperty("java.specification.version"));
+        runType=reportNameReader.getProperty("runType");
+        if(!runType.equalsIgnoreCase("restassured")) {
+            executionName = reportNameReader.getProperty("reportName");
+            //Extent report initialization
+            ExtentSparkReporter htmlReporter = new ExtentSparkReporter("test-output/" + executionName + ".html");
+            extentReports = new ExtentReports();
+            extentReports.attachReporter(htmlReporter);
+            extentTest = extentReports.createTest(getClass().getSimpleName());
+            extentReports.setSystemInfo("OS Info", System.getProperty("os.name"));
+            extentReports.setSystemInfo("Java Version", System.getProperty("java.specification.version"));
+        }
     }
 
     @BeforeMethod
     public void setWebDriver() {
-        //Chromedriver setup
-        WebDriverManager.chromedriver().setup();
-        
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
-        options.addArguments("start-maximized");
-        options.addArguments("disable-infobars");
-        options.addArguments("--disable-extensions");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--remote-allow-origins=*");
-        WebDriverListener listener = new WebdriverEventListener();
-        wDriver.set(new ChromeDriver(options));
-        WebDriver decorated = new EventFiringDecorator(listener).decorate(wDriver.get());
-        wDriver.set(decorated);
-        driver = wDriver.get();
-        System.out.println(driver);
+        if(!runType.equalsIgnoreCase("restassured")) {
+            //Chromedriver setup
+            WebDriverManager.chromedriver().setup();
+
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless");
+            options.addArguments("start-maximized");
+            options.addArguments("disable-infobars");
+            options.addArguments("--disable-extensions");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--remote-allow-origins=*");
+            WebDriverListener listener = new WebdriverEventListener();
+            wDriver.set(new ChromeDriver(options));
+            WebDriver decorated = new EventFiringDecorator(listener).decorate(wDriver.get());
+            wDriver.set(decorated);
+            driver = wDriver.get();
+        }
     }
 
     @AfterMethod
     public void tearDown() {
         //terminating execution
-        driver.quit();
-        extentReports.flush();
+        if(!runType.equalsIgnoreCase("restassured")) {
+            driver.quit();
+            extentReports.flush();
+        }
     }
 
     @AfterSuite
     public void reportMover() throws IOException {
-        System.out.println("in afterSuite");
-        //Uploading report to gcloud bucket storage
-        System.out.println("Execution complete, report manipulation started");
-        String serviceAccountKeyPath = "./g-code-editor-417ccbad5803.json";
-        GoogleCredentials credentials = ServiceAccountCredentials.fromStream(new FileInputStream(serviceAccountKeyPath))
-                .createScoped("https://www.googleapis.com/auth/cloud-platform");
-        AccessToken accessToken = credentials.refreshAccessToken();
-        String token = accessToken.getTokenValue();
-        System.out.println("Access Token: " + token);
-        uploadReport(token);
-        String reportName = "https://storage.googleapis.com/"+bucketName+"/" + executionName + ".html";
-        mongoTransfer(reportName);
+        if(!runType.equalsIgnoreCase("restassured")) {
+            System.out.println("in afterSuite");
+            //Uploading report to gcloud bucket storage
+            System.out.println("Execution complete, report manipulation started");
+            String serviceAccountKeyPath = "./g-code-editor-417ccbad5803.json";
+            GoogleCredentials credentials = ServiceAccountCredentials.fromStream(new FileInputStream(serviceAccountKeyPath))
+                    .createScoped("https://www.googleapis.com/auth/cloud-platform");
+            AccessToken accessToken = credentials.refreshAccessToken();
+            String token = accessToken.getTokenValue();
+            System.out.println("Access Token: " + token);
+            uploadReport(token);
+            String reportName = "https://storage.googleapis.com/" + bucketName + "/" + executionName + ".html";
+            mongoTransfer(reportName);
+        }
     }
 
  public void uploadReport(String token) {

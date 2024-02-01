@@ -14,18 +14,18 @@ public class compileExceptionsUploader {
     static String executionName;
 
     public static void main(String[] args) throws IOException {
-        String directory = "./test-output";
-        String fileExtension = ".html";
-        Path dir = Paths.get(directory);
-        String fileFound = findFileInDirectory(dir, fileExtension);
-        System.out.println(fileFound);
-        System.out.println("is it is null");
+        Properties reportNameReader = new Properties();
+        reportNameReader.load(new FileInputStream("./reportName.properties"));
+        String runType = reportNameReader.getProperty("runType");
+        String fileFound = findFileInDirectory(Paths.get("./test-output"), ".html");
+
+        if(runType.equalsIgnoreCase("restassured")){
+            mongoTransfer();
+            return;
+        }
         if (fileFound == null) {
-            Properties reportNameReader = new Properties();
-            reportNameReader.load(new FileInputStream("./reportName.properties"));
             executionName = reportNameReader.getProperty("reportName");
             System.out.println(executionName + " execution name");
-            String reportName = "https://storage.googleapis.com/" + bucketName + "/" + executionName + ".txt";
             mongoTransfer();
         }
     }
@@ -70,19 +70,14 @@ public class compileExceptionsUploader {
         String javaPath = "./src/main/java/App.java";
         String compileTxtPath = "./test-output/" + executionName + ".txt";
         String classContent = readClassFileAsString(javaPath);
-        classContent=classContent.replace("\"", "\\\"")
+        classContent = classContent.replace("\"", "\\\"")
                 .replace("\n", "\\n")
                 .replace("\r", "\\r");
         String compileError_content = readClassFileAsString(compileTxtPath);
         compileError_content = compileError_content.split("/target/classes")[1];
-        compileError_content=compileError_content.replace("\"", "\\\"")
+        compileError_content = compileError_content.replace("\"", "\\\"")
                 .replace("\n", "\\n")
                 .replace("\r", "\\r");
-//        RestAssured.baseURI = "https://us-east-1.aws.data.mongodb-api.com/app/application-0-awqqz/endpoint/updateSeleniumSubmission";
-//        String requestPayload = "{\r\n    \"filter\":{\r\n        \"url\":\""+url+"\"\r\n    },\r\n    \"SubmittedCode\":\""+classContent+"\",\r\n    \"Output\":\""+compileError_content+"\"\r\n}";
-//        Response responsex = RestAssured.given().contentType("application/json").body(requestPayload).put().then().extract().response();
-//        responsex.body().prettyPrint();
-
         try {
             URL getUrl = new URL("https://us-east-1.aws.data.mongodb-api.com/app/application-0-awqqz/endpoint/getSeleniumOutput"); // Replace with your actual GET API URL
             HttpURLConnection getConnection = (HttpURLConnection) getUrl.openConnection();

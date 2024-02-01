@@ -16,7 +16,7 @@ import java.util.Collection;
 public class WebdriverEventListener implements WebDriverListener {
     public static ExtentTest extentTest;
     public static Boolean isSeleniumException = false;
-    ExtentReports extentReports;
+
     private String tag, value, getText, placeHolder, id, ariaLabel;
 
     public Media captureScreenshot() {
