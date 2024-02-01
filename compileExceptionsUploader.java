@@ -20,6 +20,7 @@ public class compileExceptionsUploader {
         String fileFound = findFileInDirectory(Paths.get("./test-output"), ".html");
 
         if(runType.equalsIgnoreCase("restassured")){
+            executionName = reportNameReader.getProperty("reportName");
             mongoTransfer();
             return;
         }
