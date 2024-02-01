@@ -93,6 +93,8 @@ public abstract class driverConfig extends WebdriverEventListener {
             driver.quit();
             extentReports.flush();
         }
+        else
+            System.out.println("secret-key 1234567890");
     }
 
     @AfterSuite
