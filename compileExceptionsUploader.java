@@ -21,7 +21,7 @@ public class compileExceptionsUploader {
 
         if(runType.equalsIgnoreCase("restassured")){
             executionName = reportNameReader.getProperty("reportName");
-            mongoTransfer();
+            mongoTransfer1();
             return;
         }
         if (fileFound == null) {
