@@ -60,6 +60,8 @@ public abstract class driverConfig extends WebdriverEventListener {
             extentReports.setSystemInfo("OS Info", System.getProperty("os.name"));
             extentReports.setSystemInfo("Java Version", System.getProperty("java.specification.version"));
         }
+        else
+            System.out.println("secret-key 1234567890");
     }
 
     @BeforeMethod
