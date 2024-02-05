@@ -21,6 +21,8 @@ public class App extends driverConfig{
 public void demo(){
         RestAssured.baseURI = "https://betaapi.gemecosystem.com/gemEcosystemDashboard/actuator/health";
         Response response = RestAssured.given().get().then().extract().response();
+
+    
         response.prettyPrint();
     
 }
