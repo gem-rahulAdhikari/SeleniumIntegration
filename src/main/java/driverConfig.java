@@ -29,7 +29,6 @@ public abstract class driverConfig extends WebdriverEventListener {
     static ThreadLocal<WebDriver> wDriver = new ThreadLocal<WebDriver>();
     public String bucketName = "selenium-reportdata";
     String executionName;
-    String runType;
 
     public static String readClassFileAsString(String filePath) throws IOException {
         //Reading user-updated code
@@ -49,24 +48,18 @@ public abstract class driverConfig extends WebdriverEventListener {
     public void reporter() throws IOException {
         Properties reportNameReader = new Properties();
         reportNameReader.load(new FileInputStream("./reportName.properties"));
-        runType=reportNameReader.getProperty("runType");
-        if(!runType.equalsIgnoreCase("restassured")) {
-            executionName = reportNameReader.getProperty("reportName");
-            //Extent report initialization
-            ExtentSparkReporter htmlReporter = new ExtentSparkReporter("test-output/" + executionName + ".html");
-            extentReports = new ExtentReports();
-            extentReports.attachReporter(htmlReporter);
-            extentTest = extentReports.createTest(getClass().getSimpleName());
-            extentReports.setSystemInfo("OS Info", System.getProperty("os.name"));
-            extentReports.setSystemInfo("Java Version", System.getProperty("java.specification.version"));
-        }
-        else
-            System.out.println("secret-key 1234567890");
+        executionName=reportNameReader.getProperty("reportName");
+        //Extent report initialization
+        ExtentSparkReporter htmlReporter = new ExtentSparkReporter("test-output/" + executionName + ".html");
+        extentReports = new ExtentReports();
+        extentReports.attachReporter(htmlReporter);
+        extentTest = extentReports.createTest(getClass().getSimpleName());
+        extentReports.setSystemInfo("OS Info", System.getProperty("os.name"));
+        extentReports.setSystemInfo("Java Version", System.getProperty("java.specification.version"));
     }
 
     @BeforeMethod
     public void setWebDriver() {
-        if(!runType.equalsIgnoreCase("restassured")) {
             //Chromedriver setup
             WebDriverManager.chromedriver().setup();
 
@@ -83,23 +76,17 @@ public abstract class driverConfig extends WebdriverEventListener {
             WebDriver decorated = new EventFiringDecorator(listener).decorate(wDriver.get());
             wDriver.set(decorated);
             driver = wDriver.get();
-        }
     }
 
     @AfterMethod
     public void tearDown() {
         //terminating execution
-        if(!runType.equalsIgnoreCase("restassured")) {
             driver.quit();
             extentReports.flush();
-        }
-        else
-            System.out.println("secret-key 1234567890");
     }
 
     @AfterSuite
     public void reportMover() throws IOException {
-        if(!runType.equalsIgnoreCase("restassured")) {
             System.out.println("in afterSuite");
             //Uploading report to gcloud bucket storage
             System.out.println("Execution complete, report manipulation started");
@@ -112,7 +99,7 @@ public abstract class driverConfig extends WebdriverEventListener {
             uploadReport(token);
             String reportName = "https://storage.googleapis.com/" + bucketName + "/" + executionName + ".html";
             mongoTransfer(reportName);
-        }
+
     }
 
  public void uploadReport(String token) {
