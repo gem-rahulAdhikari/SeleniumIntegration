@@ -21,7 +21,6 @@ jobs:
 
       - name: Build and run Selenium tests
         run: |
-          # cd seleniumExecution
           mkdir test-output
           FILE_NAME=reportName.properties
 
@@ -39,13 +38,25 @@ jobs:
       - name: list files
         if: always()
         run: |
-          # cd seleniumExecution
-          # echo "ls selenium output"
           ls
           echo
           echo "ls test-output"
           cd test-output
           ls
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-output
+          path: test-output
+
+      - name: Download test report
+        if: always()
+        uses: actions/download-artifact@v2
+        with:
+          name: test-output
+
       - name: Check for compile errors and upload report
         if: always()
         run: |
