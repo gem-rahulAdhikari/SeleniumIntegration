@@ -85,7 +85,7 @@ public abstract class driverConfig extends WebdriverEventListener {
         extentReports.flush();
     }
 
-    @AfterSuite
+    // @AfterSuite
     public void reportMover() throws IOException {
         System.out.println("in afterSuite");
         //Uploading report to gcloud bucket storage
