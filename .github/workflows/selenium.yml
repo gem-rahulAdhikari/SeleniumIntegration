@@ -1,4 +1,4 @@
-name: Run Selenium Tests and Generate Report URL
+name: Run Selenium Tests
 
 on:
   push:
@@ -44,16 +44,6 @@ jobs:
           echo "ls test-output"
           cd test-output
           ls
-
-      - name: Generate URL for Extent Report HTML
-        id: generate_url
-        run: |
-          ARTIFACTORY_URL="https://your-artifactory-url/path/to/extent-report.html"
-          echo "::set-output name=report_url::$ARTIFACTORY_URL"
-          echo "Extent Report URL: $ARTIFACTORY_URL"
-
-      - name: Get report URL
-        run: echo "Report URL: ${{ steps.generate_url.outputs.report_url }}"
 
       - name: Upload test report
         if: always()
