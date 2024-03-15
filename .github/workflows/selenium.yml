@@ -79,6 +79,8 @@ jobs:
           git commit -m "Update GitHub Pages"
           # Push the changes to the same branch
           git push origin HEAD
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }} 
           
       - name: Validate GitHub Pages Accessibility
         if: always()
