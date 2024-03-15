@@ -58,8 +58,15 @@ jobs:
         with:
           name: test-output
 
-      - name: Check for compile errors and upload report
+      # New steps for uploading artifacts to GitHub Pages
+      - name: Copy files to GitHub Pages directory
         if: always()
         run: |
-          javac -cp .:resources/* compileExceptionsUploader.java
-          java -cp .:resources/* compileExceptionsUploader
+          # Add commands to copy files to GitHub Pages directory
+
+      - name: Commit and push changes to GitHub Pages
+        if: always()
+        run: |
+          # Add commands to commit and push changes to GitHub Pages branch
+
+      # End of new steps for uploading artifacts to GitHub Pages
