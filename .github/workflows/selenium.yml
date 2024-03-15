@@ -58,6 +58,12 @@ jobs:
         with:
           name: test-output
 
+      # New steps for uploading artifacts to GitHub Pages
+      - name: Set up Git
+        run: |
+          git config --global user.email "rahul.adhikari@gemnisolutions.com"
+          git config --global user.name "gem-rahulAdhikari"
+
       - name: Copy files to GitHub Pages directory
         if: always()
         run: |
