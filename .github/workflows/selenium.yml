@@ -58,18 +58,22 @@ jobs:
         with:
           name: test-output
 
-      # New steps for uploading artifacts to GitHub Pages
       - name: Copy files to GitHub Pages directory
         if: always()
         run: |
           # Add commands to copy files to GitHub Pages directory
+          cp -R test-output/* .
 
       - name: Commit and push changes to GitHub Pages
         if: always()
         run: |
-          # Add commands to commit and push changes to GitHub Pages branch
-
-
+          # Stage the changes
+          git add .
+          # Commit the changes with a message
+          git commit -m "Update GitHub Pages"
+          # Push the changes to the same branch
+          git push origin HEAD
+          
       - name: Validate GitHub Pages Accessibility
         if: always()
         run: |
