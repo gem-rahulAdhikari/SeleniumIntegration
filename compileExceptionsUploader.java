@@ -10,7 +10,7 @@ import java.util.EnumSet;
 import java.util.Properties;
 
 public class compileExceptionsUploader {
-    static String bucketName = "selenium-reportdata";
+    static String bucketName = "seloutput";
     static String executionName;
 
     public static void main(String[] args) throws IOException {
