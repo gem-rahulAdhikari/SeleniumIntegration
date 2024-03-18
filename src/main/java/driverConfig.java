@@ -27,7 +27,7 @@ public abstract class driverConfig extends WebdriverEventListener {
     ExtentReports extentReports;
     public static WebDriver driver;
     static ThreadLocal<WebDriver> wDriver = new ThreadLocal<WebDriver>();
-    public String bucketName = "selenium-reportdata";
+    public String bucketName = "seloutput";
     String executionName;
 
     public static String readClassFileAsString(String filePath) throws IOException {
