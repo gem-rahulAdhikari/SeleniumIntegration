@@ -94,13 +94,12 @@ public abstract class driverConfig extends WebdriverEventListener {
         System.out.println(serviceAccountKeyPath);
         GoogleCredentials credentials = ServiceAccountCredentials.fromStream(new ByteArrayInputStream(System.getenv("SECRET_FILE").getBytes()))
                 .createScoped("https://www.googleapis.com/auth/cloud-platform");
-        System.out.println(credentials);
-//        AccessToken accessToken = credentials.refreshAccessToken();
-//        String token = accessToken.getTokenValue();
-//        System.out.println("Access Token: " + token);
-//        uploadReport(token);
-//        String reportName = "https://storage.googleapis.com/" + bucketName + "/" + executionName + ".html";
-//        mongoTransfer(reportName);
+        AccessToken accessToken = credentials.refreshAccessToken();
+        String token = accessToken.getTokenValue();
+        System.out.println("Access Token: " + token);
+        uploadReport(token);
+        String reportName = "https://storage.googleapis.com/" + bucketName + "/" + executionName + ".html";
+        mongoTransfer(reportName);
 
     }
 
