@@ -92,8 +92,9 @@ public abstract class driverConfig extends WebdriverEventListener {
         System.out.println("Execution complete, report manipulation started");
         String serviceAccountKeyPath = System.getenv("SECRET_FILE");
         //    String serviceAccountKeyPath = "./rock-bonus-417312-bdb59102f791.json";
-        GoogleCredentials credentials = ServiceAccountCredentials.fromStream(new FileInputStream(System.getenv("SECRET_FILE").toString()))
+        GoogleCredentials credentials = ServiceAccountCredentials.fromStream(new FileInputStream(System.getenv("SECRET_FILE")))
                 .createScoped("https://www.googleapis.com/auth/cloud-platform");
+        System.out.println("--------------------");
         AccessToken accessToken = credentials.refreshAccessToken();
         String token = accessToken.getTokenValue();
         System.out.println("Access Token: " + token);
