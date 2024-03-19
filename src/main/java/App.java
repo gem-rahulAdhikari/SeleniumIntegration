@@ -15,8 +15,6 @@ public class App extends driverConfig{
     static String reportName="Report_1710837845_0";
 
     @Test
-
-
 public void demo() {
         driver.get("https://www.google.com/");
         WebElement searchInput = driver.findElement(By.xpath("//textarea"));
