@@ -91,18 +91,15 @@ public abstract class driverConfig extends WebdriverEventListener {
         //Uploading report to gcloud bucket storage
         System.out.println("Execution complete, report manipulation started");
          String serviceAccountKeyPath = System.getenv("SECRET_FILE");
-         File file=new File(serviceAccountKeyPath);
-        //    String serviceAccountKeyPath = "./rock-bonus-417312-bdb59102f791.json";
-        System.out.println("---------------------");
-        GoogleCredentials credentials = ServiceAccountCredentials.fromStream(new FileInputStream("./"+System.getenv("SECRET_FILE")))
-                .createScoped("https://www.googleapis.com/auth/cloud-platform");
-        System.out.println("--------------------");
-        AccessToken accessToken = credentials.refreshAccessToken();
-        String token = accessToken.getTokenValue();
-        System.out.println("Access Token: " + token);
-        uploadReport(token);
-        String reportName = "https://storage.googleapis.com/" + bucketName + "/" + executionName + ".html";
-        mongoTransfer(reportName);
+        System.out.println(serviceAccountKeyPath);
+//        GoogleCredentials credentials = ServiceAccountCredentials.fromStream(new FileInputStream(System.getenv("SECRET_FILE")))
+//                .createScoped("https://www.googleapis.com/auth/cloud-platform");
+//        AccessToken accessToken = credentials.refreshAccessToken();
+//        String token = accessToken.getTokenValue();
+//        System.out.println("Access Token: " + token);
+//        uploadReport(token);
+//        String reportName = "https://storage.googleapis.com/" + bucketName + "/" + executionName + ".html";
+//        mongoTransfer(reportName);
 
     }
 
