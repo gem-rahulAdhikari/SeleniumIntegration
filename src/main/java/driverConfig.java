@@ -50,7 +50,7 @@ public abstract class driverConfig extends WebdriverEventListener {
         reportNameReader.load(new FileInputStream("./reportName.properties"));
         executionName=reportNameReader.getProperty("reportName");
         //Extent report initialization
-        ExtentSparkReporter htmlReporter = new ExtentSparkReporter("test-output/" +".html");
+        ExtentSparkReporter htmlReporter = new ExtentSparkReporter("test-output/" +executionName+".html");
         extentReports = new ExtentReports();
         extentReports.attachReporter(htmlReporter);
         extentTest = extentReports.createTest(getClass().getSimpleName());
