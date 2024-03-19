@@ -90,7 +90,7 @@ public abstract class driverConfig extends WebdriverEventListener {
         System.out.println("in afterSuite");
         //Uploading report to gcloud bucket storage
         System.out.println("Execution complete, report manipulation started");
-         String serviceAccountKeyPath = System.getenv("secretFIle");
+         String serviceAccountKeyPath = System.getenv("secretFile");
         System.out.println(serviceAccountKeyPath);
         GoogleCredentials credentials = ServiceAccountCredentials.fromStream(new FileInputStream(System.getenv("secretFile")));
 //                .createScoped("https://www.googleapis.com/auth/cloud-platform");
