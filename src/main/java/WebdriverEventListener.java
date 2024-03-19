@@ -15,16 +15,18 @@ import java.util.Collection;
 
 public class WebdriverEventListener implements WebDriverListener {
     public static ExtentTest extentTest;
-    ExtentReports extentReports;
-    private String tag, value, getText, placeHolder, id, ariaLabel;
     public static Boolean isSeleniumException = false;
 
+    private String tag, value, getText, placeHolder, id, ariaLabel;
+
     public Media captureScreenshot() {
+        //creating screenshots for reporting with
         TakesScreenshot screenshotDriver = (TakesScreenshot) driverConfig.driver;
         byte[] screenshotBytes = screenshotDriver.getScreenshotAs(OutputType.BYTES);
         return MediaEntityBuilder.createScreenCaptureFromBase64String(Base64.getEncoder().encodeToString(screenshotBytes)).build();
     }
 
+    //functions for overriding default methods for adding default selenium commands to report
     @Override
     public void afterGet(WebDriver driver, String url) {
         extentTest.log(Status.PASS, "Launched Url Successfully : " + url, captureScreenshot());
@@ -136,19 +138,20 @@ public class WebdriverEventListener implements WebDriverListener {
             mouseAction = "Right Click";
         extentTest.log(Status.PASS, "Successfully: Performed Action " + mouseAction, captureScreenshot());
     }
+
     @Override
     public void afterExecuteScript(WebDriver driver, String script, Object[] args, Object result) {
-        extentTest.log(Status.PASS,"JavaScriptExecuter : " + script,captureScreenshot());
+        extentTest.log(Status.PASS, "JavaScriptExecuter : " + script, captureScreenshot());
     }
 
     @Override
     public void afterAnyAlertCall(Alert alert, Method method, Object[] args, Object result) {
-        extentTest.log(Status.PASS,"Alert Operation : " + method.getName().toUpperCase(),captureScreenshot());
+        extentTest.log(Status.PASS, "Alert Operation : " + method.getName().toUpperCase(), captureScreenshot());
     }
 
     @Override
     public void afterAnyWindowCall(WebDriver.Window window, Method method, Object[] args, Object result) {
-        extentTest.log(Status.PASS,"Window Operation : " + method.getName().toUpperCase(),captureScreenshot());
+        extentTest.log(Status.PASS, "Window Operation : " + method.getName().toUpperCase(), captureScreenshot());
     }
 
     @Override
@@ -156,17 +159,17 @@ public class WebdriverEventListener implements WebDriverListener {
         isSeleniumException = true;
         String log = e.getTargetException().getMessage().split("Session info")[0];
         log = log.substring(0, log.length() - 1);
-        extentTest.log(Status.FAIL,"Error in : " + args[0]+"<br></br>"+ log,captureScreenshot());
+        extentTest.log(Status.FAIL, "Error in : " + args[0] + "<br></br>" + log, captureScreenshot());
     }
 
     @Override
     public void afterClose(WebDriver driver) {
-        extentTest.log(Status.PASS,"Close Driver");
+        extentTest.log(Status.PASS, "Close Driver");
     }
 
     @Override
     public void afterQuit(WebDriver driver) {
-        extentTest.log(Status.PASS,"Quit Driver");
+        extentTest.log(Status.PASS, "Quit Driver");
     }
 
 }

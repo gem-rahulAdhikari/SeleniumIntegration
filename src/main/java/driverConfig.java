@@ -1,8 +1,9 @@
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
+import com.google.auth.oauth2.AccessToken;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.auth.oauth2.ServiceAccountCredentials;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.openqa.selenium.WebDriver;
@@ -14,69 +15,115 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import io.restassured.RestAssured;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Properties;
 
 
 public abstract class driverConfig extends WebdriverEventListener {
+    ExtentReports extentReports;
     public static WebDriver driver;
     static ThreadLocal<WebDriver> wDriver = new ThreadLocal<WebDriver>();
+    public String bucketName = "seloutput";
+    String executionName;
+
+    public static String readClassFileAsString(String filePath) throws IOException {
+        //Reading user-updated code
+        StringBuilder content = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                content.append(line).append('\n');
+            }
+        }
+
+        return content.toString();
+    }
 
     @BeforeSuite
-    public void reporter() {
-        ExtentSparkReporter htmlReporter = new ExtentSparkReporter("test-output/" + App.reportName + ".html");
+    public void reporter() throws IOException {
+        Properties reportNameReader = new Properties();
+        reportNameReader.load(new FileInputStream("./reportName.properties"));
+        executionName=reportNameReader.getProperty("reportName");
+        //Extent report initialization
+        ExtentSparkReporter htmlReporter = new ExtentSparkReporter("test-output/" +executionName+".html");
         extentReports = new ExtentReports();
         extentReports.attachReporter(htmlReporter);
         extentTest = extentReports.createTest(getClass().getSimpleName());
+        extentReports.setSystemInfo("OS Info", System.getProperty("os.name"));
+        extentReports.setSystemInfo("Java Version", System.getProperty("java.specification.version"));
     }
 
     @BeforeMethod
     public void setWebDriver() {
-        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
-        options.addArguments("start-maximized");
-        options.addArguments("disable-infobars");
-        options.addArguments("--disable-extensions");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--no-sandbox");
-        WebDriverListener listener = new WebdriverEventListener();
-        wDriver.set(new ChromeDriver(options));
-        WebDriver decorated = new EventFiringDecorator(listener).decorate(wDriver.get());
-        wDriver.set(decorated);
-        driver = wDriver.get();
+            //Chromedriver setup
+            WebDriverManager.chromedriver().setup();
+
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless");
+            options.addArguments("start-maximized");
+            options.addArguments("disable-infobars");
+            options.addArguments("--disable-extensions");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--remote-allow-origins=*");
+            WebDriverListener listener = new WebdriverEventListener();
+            wDriver.set(new ChromeDriver(options));
+            WebDriver decorated = new EventFiringDecorator(listener).decorate(wDriver.get());
+            wDriver.set(decorated);
+            driver = wDriver.get();
     }
 
     @AfterMethod
     public void tearDown() {
-        driver.quit();
-        extentReports.flush();
+        //terminating execution
+            driver.quit();
+            extentReports.flush();
     }
 
     @AfterSuite
-    public void uploadReport() throws IOException, InterruptedException {
-        System.out.println("in upload function");
-        String scriptPath = "./upload.sh";
-        ProcessBuilder processBuilder = new ProcessBuilder(scriptPath);
-        System.out.println("upload started");
-        Process process = processBuilder.start();
-        int exitCode = process.waitFor();
-        String reportName="https://storage.googleapis.com/selenium-output/" + App.reportName + ".html";
-        System.out.println("Report name: https://storage.googleapis.com/selenium-output/" + App.reportName + ".html");
-        mongoTransfer(reportName);
+    public void reportMover() throws IOException {
+            System.out.println("in afterSuite");
+            //Uploading report to gcloud bucket storage
+            System.out.println("Execution complete, report manipulation started");
+            String serviceAccountKeyPath = "./rock-bonus-417312-bdb59102f791.json";
+            GoogleCredentials credentials = ServiceAccountCredentials.fromStream(new FileInputStream(serviceAccountKeyPath))
+                    .createScoped("https://www.googleapis.com/auth/cloud-platform");
+            AccessToken accessToken = credentials.refreshAccessToken();
+            String token = accessToken.getTokenValue();
+            System.out.println("Access Token: " + token);
+            uploadReport(token);
+            String reportName = "https://storage.googleapis.com/" + bucketName + "/" + executionName + ".html";
+            mongoTransfer(reportName);
+
+    }
+
+ public void uploadReport(String token) {
+        try {
+            System.out.println("in upload function");
+            String filePath = "./test-output/"+executionName+".html";
+            File file=new File(filePath);
+            RestAssured.baseURI = "https://storage.googleapis.com/upload/storage/v1/b/"+bucketName+"/o";
+            RestAssured.given().header("Authorization", "Bearer " + token).queryParam("uploadType","media").queryParam("name",executionName+".html").contentType("text/html").body(file).post().then().statusCode(200);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void mongoTransfer(String reportName) throws IOException {
-        String userId=App.reportName.split("_")[1];
-        System.out.println(userId);
-        String url="http://127.0.0.1:5000/editor?name="+userId;
-        System.out.println(url);
-        String filePath = "src/test/java/App.java";
+        //uploading bucket report link and user-updated code to db
+        System.out.println("in mongo upload function");
+        String userId = executionName.split("_")[1];
+        // String url = "http://g-codeeditor.el.r.appspot.com/editor?name=" + userId;
+        // String filePath = "./src/main/java/App.java";
+        String url=userId;
+        String filePath = "./src/main/java/App.java";
         String classContent = readClassFileAsString(filePath);
-        System.out.println(classContent);
-        System.out.println(reportName);
+        System.out.print("class content"+classContent);
         String escapedClassContent = classContent.replace("\"", "\\\"")
                 .replace("\n", "\\n")
                 .replace("\r", "\\r");
@@ -118,7 +165,7 @@ public abstract class driverConfig extends WebdriverEventListener {
                                     "    \"filter\": {\n" +
                                     "        \"url\": \"" + url + "\"\n" +
                                     "    },\n" +
-                                    "    \"SubmittedCode\":\""+ escapedClassContent +"\",\n" +
+                                    "    \"SubmittedCode\":\"" + escapedClassContent + "\",\n" +
                                     "    \"Output\":\"" + reportName + "\"\n" +
                                     "}";
 
@@ -145,7 +192,7 @@ public abstract class driverConfig extends WebdriverEventListener {
                                 "    \"filter\": {\n" +
                                 "        \"url\": \"" + url + "\"\n" +
                                 "    },\n" +
-                                "    \"code\":\""+ escapedClassContent +"\",\n" +
+                                "    \"code\":\"" + escapedClassContent + "\",\n" +
                                 "    \"output\":\"" + reportName + "\"\n" +
                                 "}";
 
@@ -168,36 +215,5 @@ public abstract class driverConfig extends WebdriverEventListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
-//        RestAssured.baseURI = "https://us-east-1.aws.data.mongodb-api.com/";
-//        String jsonBody = "{\n" +
-//                "    \"filter\": {\n" +
-//                "        \"url\": \"" + url + "\"\n" +
-//                "    },\n" +
-//                "    \"SubmittedCode\":\"" + classContent + "\",\n" +
-//                "    \"Output\":\"" + reportName + "\"\n" +
-//                "}";
-//        Response response = RestAssured
-//                .given()
-//                .header("Content-type", "application/json")
-//                .contentType(ContentType.JSON)
-//                .body(jsonBody)
-//                .put("app/application-0-awqqz/endpoint/updateSeleniumSubmission")
-//                .then()
-//                .extract().response();
-    }
-    public static String readClassFileAsString(String filePath) throws IOException {
-        StringBuilder content = new StringBuilder();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                content.append(line).append('\n');
-            }
-        }
-
-        return content.toString();
     }
 }
