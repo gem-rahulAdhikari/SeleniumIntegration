@@ -12,7 +12,7 @@ import java.math.*;
 import java.time.*;
 
 public class App extends driverConfig{
-    static String reportName="Report_1710842792_0";
+    static String reportName="Report_1710842792_1";
 
     @Test
 public void demo() {
@@ -25,8 +25,6 @@ public void demo() {
         System.out.println(fetchedTitle + " start2");
 
  }
-
-
 
 
 
