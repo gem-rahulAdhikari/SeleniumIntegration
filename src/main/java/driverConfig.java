@@ -91,10 +91,10 @@ public abstract class driverConfig extends WebdriverEventListener {
         //Uploading report to gcloud bucket storage
         System.out.println("Execution complete, report manipulation started");
          String serviceAccountKeyPath = System.getenv("SECRET_FILE");
-        System.out.println("--------------------------------------------");
          File file=new File(serviceAccountKeyPath);
         //    String serviceAccountKeyPath = "./rock-bonus-417312-bdb59102f791.json";
-        GoogleCredentials credentials = ServiceAccountCredentials.fromStream(new FileInputStream(file))
+        System.out.println("---------------------");
+        GoogleCredentials credentials = ServiceAccountCredentials.fromStream(new FileInputStream("./"+System.getenv("SECRET_FILE")))
                 .createScoped("https://www.googleapis.com/auth/cloud-platform");
         System.out.println("--------------------");
         AccessToken accessToken = credentials.refreshAccessToken();
