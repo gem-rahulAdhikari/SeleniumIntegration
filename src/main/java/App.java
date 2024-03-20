@@ -12,10 +12,10 @@ import java.math.*;
 import java.time.*;
 
 public class App extends driverConfig{
-    static String reportName="Report_1710851548_1";
+    static String reportName="Report_1710851548_2";
 
     @Test
-  public void demo() {
+ public void demo() {
         driver.get("https://www.google.com/");
         WebElement searchInput = driver.findElement(By.xpath("//textarea"));
         searchInput.sendKeys("selenium");
