@@ -26,7 +26,7 @@ import java.util.Properties;
 public abstract class driverConfig extends WebdriverEventListener {
     public static WebDriver driver;
     static ThreadLocal<WebDriver> wDriver = new ThreadLocal<WebDriver>();
-    public String bucketName = "seloutput";
+    String bucketName = "seloutput";
     ExtentReports extentReports;
     String executionName;
 
