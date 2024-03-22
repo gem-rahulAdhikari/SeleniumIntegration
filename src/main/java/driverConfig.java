@@ -60,42 +60,23 @@ public abstract class driverConfig extends WebdriverEventListener {
 
     @BeforeMethod
     public void setWebDriver() {
-        //Chromedriver setup
-        // WebDriverManager.chromedriver().setup();
+        // Chromedriver setup
+        WebDriverManager.chromedriver().setup();
 
-        // ChromeOptions options = new ChromeOptions();
-        // options.addArguments("--headless");
-        // options.addArguments("start-maximized");
-        // options.addArguments("disable-infobars");
-        // options.addArguments("--disable-extensions");
-        // options.addArguments("--disable-dev-shm-usage");
-        // options.addArguments("--no-sandbox");
-        // options.addArguments("--remote-allow-origins=*");
-        // WebDriverListener listener = new WebdriverEventListener();
-        // wDriver.set(new ChromeDriver(options));
-        // WebDriver decorated = new EventFiringDecorator(listener).decorate(wDriver.get());
-        // wDriver.set(decorated);
-        // driver = wDriver.get();
-        // WebDriverManager.chromedriver().setup();
-
-    ChromeOptions options = new ChromeOptions();
-    options.addArguments("--headless");
-    options.addArguments("--start-maximized");
-    options.addArguments("--disable-infobars");
-    options.addArguments("--disable-extensions");
-    options.addArguments("--disable-dev-shm-usage");
-    options.addArguments("--no-sandbox");
-    options.addArguments("--remote-debugging-port=9222");  // Specify a port number for remote debugging
-    WebDriverListener listener = new WebdriverEventListener();
-
-    // Create a new instance of ChromeDriver with the configured options
-    WebDriver driver = new ChromeDriver(options);
-    
-    // Wrap the driver with the event firing decorator
-    driver = new EventFiringDecorator(listener).decorate(driver);
-
-    // Set the driver to the ThreadLocal instance
-    wDriver.set(driver);
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        options.addArguments("start-maximized");
+        options.addArguments("disable-infobars");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--remote-allow-origins=*");
+        WebDriverListener listener = new WebdriverEventListener();
+        wDriver.set(new ChromeDriver(options));
+        WebDriver decorated = new EventFiringDecorator(listener).decorate(wDriver.get());
+        wDriver.set(decorated);
+        driver = wDriver.get();
+        WebDriverManager.chromedriver().setup();
     }
 
     @AfterMethod
