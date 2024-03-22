@@ -60,7 +60,7 @@ public abstract class driverConfig extends WebdriverEventListener {
 
     @BeforeMethod
     public void setWebDriver() {
-        // Chromedriver setup
+        //Chromedriver setup
         WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
@@ -76,7 +76,6 @@ public abstract class driverConfig extends WebdriverEventListener {
         WebDriver decorated = new EventFiringDecorator(listener).decorate(wDriver.get());
         wDriver.set(decorated);
         driver = wDriver.get();
-        WebDriverManager.chromedriver().setup();
     }
 
     @AfterMethod
@@ -91,6 +90,8 @@ public abstract class driverConfig extends WebdriverEventListener {
         System.out.println("in afterSuite");
         //Uploading report to gcloud bucket storage
         System.out.println("Execution complete, report manipulation started");
+         String serviceAccountKeyPath = System.getenv("SECRET_FILE");
+        System.out.println(serviceAccountKeyPath);
         GoogleCredentials credentials = ServiceAccountCredentials.fromStream(new ByteArrayInputStream(System.getenv("SECRET_FILE").getBytes()))
                 .createScoped("https://www.googleapis.com/auth/cloud-platform");
         AccessToken accessToken = credentials.refreshAccessToken();
