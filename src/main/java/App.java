@@ -1,13 +1,22 @@
+import com.aventstack.extentreports.Status;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
 
-public class App extends driverConfig {
-    static String reportName="Report_1710855657_0";
+import java.lang.*;
+import java.util.*;
+import java.awt.*;
+import java.math.*;
+import java.time.*;
 
+public class App extends driverConfig{
+static String reportName="Report_1712145401_0";
+  
     @Test
-    public void demo() {
+
+ public void demo() {
         driver.get("https://www.google.com/");
         WebElement searchInput = driver.findElement(By.xpath("//textarea"));
         searchInput.sendKeys("selenium");
@@ -17,4 +26,30 @@ public class App extends driverConfig {
         System.out.println(fetchedTitle + " start2");
     
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
