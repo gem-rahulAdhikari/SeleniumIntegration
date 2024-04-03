@@ -4,6 +4,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 public class App extends driverConfig {
+    static String reportName="Report_1710855657_0";
 
     @Test
     public void demo() {
