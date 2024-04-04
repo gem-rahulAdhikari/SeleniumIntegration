@@ -39,7 +39,7 @@ public class WebdriverEventListener implements WebDriverListener {
 
     @Override
     public void afterSendKeys(WebElement element, CharSequence... keysToSend) {
-        String description = "Successfully: Entered Text " + keysToSend[0] + " In TextBox";
+        String description = "Successfully: Entered Text in TextBox";
         extentTest.log(Status.PASS, description, captureScreenshot());
     }
 
